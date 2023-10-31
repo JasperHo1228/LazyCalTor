@@ -1,4 +1,4 @@
-#Lazy Split bill React App
+# Lazy Split bill React App
 
 This project is for people who are too lazy to calculate their dining bills with friends or family.
 
