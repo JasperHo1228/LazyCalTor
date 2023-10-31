@@ -1,0 +1,20 @@
+.warning-text{
+    font-size: x-large;
+    font-weight: 600;
+}
+.aladdin{
+    padding-top: 1rem;
+    width: 540px;
+}
+.aladdin-jasmine{
+    padding-top: 1rem;
+    width: 340px;
+}
+@media screen and (max-width:900px){
+    .aladdin{
+        width: 100%;
+    }
+    .aladdin-jasmine{
+        width: 100%;
+    }
+}

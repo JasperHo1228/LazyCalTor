@@ -1,0 +1,92 @@
+
+.output-frame-container{
+    padding: 1.5rem;
+}
+
+.frame-group{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.each-frame{
+    padding: 1.5rem;
+}
+
+.share-frame-wrapper{
+    padding: 2rem;
+}
+
+.share-frame-container{
+    border-radius: 0.5rem;
+    padding:3.5rem;
+    flex-direction: column;
+    background-color: #16A39E;
+}
+
+.share-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+  }
+  
+  .label-share-info {
+    padding: 0.5rem;
+    font-size: large;
+    color: #FCD53B;
+    font-weight: 700;
+  }
+  
+  .per-person{
+    padding-top: 1rem;
+    font-size: large;
+    color: #FCD53B;
+    font-weight: 700;
+  }
+
+.input-field-share{
+    padding:1.5rem;
+    outline: none;
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    border: none;
+    resize: none;
+    transition: 0.5s ease-out;
+    color:#000;
+    font-weight: 700;
+    font-size: large;
+    color: #b49106;
+}
+
+
+.calculate-btn-container{
+    padding-bottom: 1.5rem;
+}
+
+
+.warning-frame-wrapper{
+    padding: 2.5rem;
+}
+
+.warning-frame-container{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    padding: 3.5rem;
+    background-color: rgb(247, 221, 186);
+    border-radius: 0.5rem;
+}
+
+@media screen and (max-width:280px) {
+    .input-field-share{
+        padding:0;
+        padding-top: .8rem;
+        padding-bottom: .8rem;
+    }
+    .frame-group{
+        flex-wrap: nowrap;
+        flex-direction: column;
+    }
+    
+}

@@ -1,0 +1,112 @@
+
+.numberofFrameContainer{
+   position: relative;
+   width: 100%;
+}
+
+.input-group{
+    position: relative;
+    width: 100%;
+}
+
+.numberofFrameContainer .input-group .input-field{ 
+    text-align: center;
+    background-color: #FFB871;
+    width: 240px;
+    height: 30px;
+    outline: none;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    border: none;
+    resize: none;
+    transition: 0.5s ease-out;
+    color:#009ca4;
+    font-weight: 700;
+    font-size: large;
+}
+
+/* label for each input field */
+.numberofFrameContainer .input-group .placeholder{
+    position: absolute;
+    top:8px;
+    left:0px;
+    padding:15px;
+    cursor: text;
+    overflow: hidden;
+    transition: top 0.5s ease-out;
+    border-radius:0.5rem;
+}
+
+.btn-container {
+    padding-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }
+
+.tap-me{
+  align-items: center;
+  justify-content: center;
+  background-color: #99DCE3;
+  border: 2px solid #042123;
+  border-radius: 8px;
+  box-sizing: border-box;
+  color: #042123;
+  cursor: pointer;
+  display: flex;
+  font-family: Inter,sans-serif;
+  font-size: 16px;
+  height: 48px;
+  line-height: 24px;
+  max-width: 100%;
+  padding: 0 25px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  font-size: large;
+  font-weight: 600;
+}
+
+.tap-me:after {
+  background-color: #042123;
+  border-radius: 8px;
+  content: "";
+  display: block;
+  height: 48px;
+  width: 100%;
+  position: absolute;
+  top: -2px;
+  transform: translate(8px, 8px);
+  transition: transform .2s ease-out;
+  z-index: -1;
+}
+
+.tap-me:hover:after {
+  transform: translate(0, 0);
+}
+
+.tap-me:active {
+  background-color: #ffdd7a;
+  outline: 0;
+}
+
+.tap-me:hover {
+  outline: 0;
+}
+.copyright{
+  padding-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+    .tap-me {
+    padding: 0 40px;
+  }
+}
+
