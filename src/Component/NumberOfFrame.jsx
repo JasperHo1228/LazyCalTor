@@ -6,7 +6,8 @@ function NumberOfFrame() {
     const [frames,setNumberFrames] = useState([]);
     const [frameCount,setFrameCount] = useState("");
     const [warning,setWarning] = useState(null);
-   
+    const [inputValue, setInputValue] = useState('');
+
     const generateFrame = (count) => {
       setWarning(parseInt(count));
     
@@ -17,24 +18,30 @@ function NumberOfFrame() {
       setNumberFrames(frames);
     };
 
+    const inputOnChange = (event) => {
+      let value = event.target.value;
+      value = value.replace(/[^0-9]/g, '')
+      setInputValue(value);
+      const inputValue = event.target.value
+      setFrameCount(inputValue)
+    }
+    
   return (
     <div className="numberofFrameContainer">
       <div className="input-group">
       <input
-        placeholder="Input number of people"
+        placeholder="Enter number of people"
         id="fname"
-        type="number"
         className="input-field"
-        value={frameCount}
-        onChange={(e) => setFrameCount(e.target.value)}
+        value={inputValue}
+        onChange={inputOnChange}
       />
       </div>
        <div className="btn-container">
        <button className='tap-me' onClick = {()=> generateFrame(frameCount)}>撳掣</button>
        </div>
-       <>
+       
        <FrameStructure framesArray = {frames}  warningTextStatus={warning} className="output-frame-container" />
-       </>
       
     </div>
   )

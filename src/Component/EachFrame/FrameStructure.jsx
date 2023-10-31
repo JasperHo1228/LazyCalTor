@@ -25,20 +25,28 @@ export default FrameStructure
 const FrameOuterPart = ({framesArray})=>{
     const [shareFood, setshareFood] = useState(0);
     const [servicePercent, setServicePercent] = useState(0);
-    
+    const [inputValue, setInputValue] = useState('');
+    const [inputValue2, setInputValue2] = useState('');
+
     const ShareFoodCalculate = (event) => {
-        const inputValue = event.target.value;
-        const sum = SumUpEach_Input(inputValue);
+        let value = event.target.value;
+        value = value.replace(/[^0-9,. ]/g, '')
+        setInputValue2(value);
+        const sum = SumUpEach_Input(value);
         const total = sum/framesArray.length;
         // Update the total sum for this frame
-        setshareFood(total);
+        setshareFood(total.toFixed(4));
       };
 
+    
       const percentage_service = (event)=>{
-          const inputValue = event.target.value;
-          setServicePercent(inputValue/100);
+          let value = event.target.value;
+          value = value.replace(/[^0-9%.]/g, '');
+          setInputValue(value);
+          const checkString =  value.replace('%','')
+          setServicePercent(checkString/100);
       }
-
+     
     return(
       <>
         <div className="frame-group">
@@ -57,13 +65,22 @@ const FrameOuterPart = ({framesArray})=>{
                 <h1> Any Share Food or Service Charge?</h1>
                     <div className="share-info">
                     
-                    <input onChange = {ShareFoodCalculate} placeholder="Share Food" className='input-field-share' autoComplete="off"/>
+                    <input onChange = {ShareFoodCalculate} 
+                           value={inputValue2} 
+                           placeholder="Share Food" 
+                           className='input-field-share'  
+                           name="shareFood" 
+                           autoComplete="off"/>
                     <div className='per-person'>Per Person: ${shareFood}</div>
                 </div>
 
                 <div className="share-info">
-                   
-                    <input onChange = {percentage_service}  placeholder="Service Charge %" className='input-field-share' autoComplete="off"/>
+                    <input onChange = {percentage_service} 
+                            name="shareFood"
+                            value={inputValue} 
+                            placeholder="Service Charge %" 
+                            className='input-field-share' 
+                            autoComplete="off"/>
                 </div>
               </div>
          </div>

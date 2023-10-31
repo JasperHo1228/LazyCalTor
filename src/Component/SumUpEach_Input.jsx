@@ -1,6 +1,6 @@
 const SumUpEach_Input =  (inputValue) => {
     // Split the input by spaces and commas, and filter out any empty strings
-    const values = inputValue.split(/[\s,]+/).filter((value) => value !== "");
+    const values = inputValue.split(/[\s,，]+/).filter((value) => value !== "");
     // Calculate the sum of the values
     const sum = values.reduce((total, currValue) => {
       // Parse each value as a float, or 0 if it's not a valid number

@@ -4,10 +4,12 @@ import SumUpEach_Input from '../SumUpEach_Input';
 
 function EachFrame({shareFood,servicePercent }) {
     const [totalAmount, setTotalAmount] = useState(0);
-
+    const [inputValue, setInputValue] = useState('');
     const handleInputChange = (event) => {
-        const inputValue = event.target.value;
-        const sum = SumUpEach_Input(inputValue)
+        let value = event.target.value;
+        value = value.replace(/[^0-9,.， ]/g, '')
+        setInputValue(value);
+        const sum = SumUpEach_Input(value)
         setTotalAmount(sum);
       };
 
@@ -23,8 +25,8 @@ function EachFrame({shareFood,servicePercent }) {
         <div className='flexColCenter frame-container'>
           <div className='upper-frame-section'>
                 <input type='text' placeholder="Name" className='input-field' name='name' autoComplete="off"/>
-                <input onChange={handleInputChange} placeholder="Enter the price amount" className='input-field' name="price" autoComplete="off"/>
-                <div className="total-amount"> Total: {calculateFinalTotal()} </div>
+                <input onChange={handleInputChange}  value={inputValue} placeholder="Enter the price amount" className='input-field' name="price" autoComplete="off"/>
+                <div className="total-amount"> Total: ${calculateFinalTotal()} </div>
         </div>
         </div>
     </div>
