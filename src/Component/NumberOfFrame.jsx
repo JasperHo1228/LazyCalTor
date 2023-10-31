@@ -8,16 +8,16 @@ function NumberOfFrame() {
     const [warning,setWarning] = useState(null);
     const [inputValue, setInputValue] = useState('');
 
+     //generate an array frame
     const generateFrame = (count) => {
       setWarning(parseInt(count));
-    
-      const frames = Array.from({ length: count }, (_, index) => ({
+      const framesArray = Array.from({ length: count }, (_, index) => ({
         id: index + 1,
       }));
-    
-      setNumberFrames(frames);
+      setNumberFrames(framesArray);
     };
 
+    //input the number of people 
     const inputOnChange = (event) => {
       let value = event.target.value;
       value = value.replace(/[^0-9]/g, '')

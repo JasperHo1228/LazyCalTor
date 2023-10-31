@@ -1,6 +1,6 @@
 .frame-wrapper{
     position: relative;
-
+    padding-top: 1.5rem;
 }
 
 .frame-container{
@@ -18,10 +18,15 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    gap:0.5rem;
+    gap:1.5rem;
     border-radius: 0.5rem;
 }
 
+.each-frame-title{
+    color: #ffe341;
+    font-weight: 700;
+    font-size: x-large;
+}
 
 .input-field{
     padding:0.8rem;
@@ -34,7 +39,6 @@
     color:#000;
     font-weight: 700;
     font-size: large;
-    
 }
 
 

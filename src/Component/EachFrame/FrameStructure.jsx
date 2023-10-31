@@ -8,6 +8,7 @@ const FrameStructure = ({ framesArray, warningTextStatus }) => {
   
   return(
     framesArray.length >= 2 ? (
+         //print out array of frame
          <FrameOuterPart framesArray={framesArray}/>
     ) : (
       <div className='warning-frame-wrapper'>
@@ -30,12 +31,12 @@ const FrameOuterPart = ({framesArray})=>{
 
     const ShareFoodCalculate = (event) => {
         let value = event.target.value;
-        value = value.replace(/[^0-9,. ]/g, '')
+        value = value.replace(/[^0-9,.， ]/g, '')
         setInputValue2(value);
         const sum = SumUpEach_Input(value);
         const total = sum/framesArray.length;
         // Update the total sum for this frame
-        setshareFood(total.toFixed(4));
+        setshareFood(total);
       };
 
     
@@ -71,7 +72,7 @@ const FrameOuterPart = ({framesArray})=>{
                            className='input-field-share'  
                            name="shareFood" 
                            autoComplete="off"/>
-                    <div className='per-person'>Per Person: ${shareFood}</div>
+                    <div className='per-person'>Per Person: ${shareFood.toFixed(4)}</div>
                 </div>
 
                 <div className="share-info">
