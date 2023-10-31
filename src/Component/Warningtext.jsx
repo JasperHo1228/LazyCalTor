@@ -1,6 +1,8 @@
 import React from "react";
 import '../style/Warningtext.css'
 import { LazyLoadImage } from "react-lazy-load-image-component";
+import Aladdin from "../Image/Aladdin.png"
+import Jasmine from "../Image/Jasmine-Profile1.webp"
 const Warningtext = ({ number }) => {
     if (number < 0 || number === 0) {
         return (
@@ -10,7 +12,7 @@ const Warningtext = ({ number }) => {
             <br />
             咪撚玩野啦屌!
             <br/>
-            <LazyLoadImage src="/image/Aladdin.png" className="aladdin"/>
+            <LazyLoadImage src={Aladdin} className="aladdin"/>
           </div>
         );
       } else if (number === 1) {
@@ -21,7 +23,7 @@ const Warningtext = ({ number }) => {
             <br />
             自己用計數機啦
             <br/>
-            <LazyLoadImage src="/image/Aladdin.png" className="aladdin"/>
+            <LazyLoadImage src={Aladdin} className="aladdin"/>
           </div>
         );
       } else {
@@ -32,7 +34,7 @@ const Warningtext = ({ number }) => {
             <br />
             請輸入一個合理數字
             <br/>
-            <LazyLoadImage src="/image/Jasmine-Profile1.webp" className="aladdin-jasmine"/>
+            <LazyLoadImage src={Jasmine} className="aladdin-jasmine"/>
           </div>
         );
       }

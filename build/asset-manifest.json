@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/LazyCalTor/static/css/main.a2dc73c8.css",
+    "main.js": "/LazyCalTor/static/js/main.eeabb980.js",
+    "static/js/787.b36e709f.chunk.js": "/LazyCalTor/static/js/787.b36e709f.chunk.js",
+    "index.html": "/LazyCalTor/index.html",
+    "main.a2dc73c8.css.map": "/LazyCalTor/static/css/main.a2dc73c8.css.map",
+    "main.eeabb980.js.map": "/LazyCalTor/static/js/main.eeabb980.js.map",
+    "787.b36e709f.chunk.js.map": "/LazyCalTor/static/js/787.b36e709f.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a2dc73c8.css",
+    "static/js/main.eeabb980.js"
+  ]
+}
