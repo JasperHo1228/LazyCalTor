@@ -35,7 +35,6 @@
     margin-top: 2rem;
     padding-top: 0.5rem;
     padding-bottom:2rem;
-
     background-color: #16A39E;
     border-radius: 0.5rem;
 }
@@ -101,6 +100,18 @@
     background-color: rgb(247, 221, 186);
     border-radius: 0.5rem;
 }
+
+@media screen and (max-width:500px) {
+    .notice-wrapper{
+        padding-left: 4rem;
+        padding-right: 4rem;
+    }
+    
+    .notice-container{
+        padding:2.5rem;
+    }
+}
+
 
 @media screen and (max-width:280px) {
     .input-field-share{

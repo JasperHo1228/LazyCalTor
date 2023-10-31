@@ -3,7 +3,7 @@ import '../../style/EachFrame.css'
 import SumUpEach_Input from '../SumUpEach_Input';
 
 function EachFrame({shareFood,servicePercent}) {
-  
+
     const [totalAmount, setTotalAmount] = useState(0);
     const [inputValue, setInputValue] = useState('');
     const [name,setName] = useState('');
@@ -28,7 +28,7 @@ function EachFrame({shareFood,servicePercent}) {
             window.alert("No more than 18 words")
         }
         else{
-        setName(event.target.value)
+            setName(event.target.value)
         }
       }
 
@@ -36,10 +36,10 @@ function EachFrame({shareFood,servicePercent}) {
     <div className='frame-wrapper'>
         <div className='flexColCenter frame-container'>
           <div className='upper-frame-section'>
-                <div className='each-frame-title'>{name}</div>
+              <div className='each-frame-title'>{name}</div>
                 <input type='text' onChange={frameName} placeholder="Name" className='input-field' name='name' autoComplete="off"/>
-                <input onChange={handleInputChange}  value={inputValue} placeholder="Enter the price amount" className='input-field' name="price" autoComplete="off"/>
-                <div className="total-amount"> Total: ${calculateFinalTotal()} </div>
+                <input onChange={handleInputChange} value={inputValue} placeholder="Enter the price amount" className='input-field' name="price" autoComplete="off"/>
+              <div className="total-amount"> Total: ${calculateFinalTotal()} </div>
         </div>
         </div>
     </div>
