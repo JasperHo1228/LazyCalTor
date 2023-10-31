@@ -50,6 +50,15 @@ const FrameOuterPart = ({framesArray})=>{
      
     return(
       <>
+         <div className='notice-wrapper'>
+        <div className='flexColCenter notice-container'>
+            <div className='notice-text'>
+              <h2>Notice!!</h2>
+              Please use space bar or ,(comma) to split up each number<br/>
+              請用空白鍵/逗號隔開價錢
+            </div>
+          </div>
+          </div>
         <div className="frame-group">
         {
          framesArray.map((frame) => (
@@ -65,7 +74,6 @@ const FrameOuterPart = ({framesArray})=>{
                 <div className="share-frame-container">
                 <h1> Any Share Food or Service Charge?</h1>
                     <div className="share-info">
-                    
                     <input onChange = {ShareFoodCalculate} 
                            value={inputValue2} 
                            placeholder="Share Food" 

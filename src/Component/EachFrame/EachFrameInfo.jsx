@@ -2,10 +2,12 @@ import React,{useState} from 'react'
 import '../../style/EachFrame.css'
 import SumUpEach_Input from '../SumUpEach_Input';
 
-function EachFrame({shareFood,servicePercent }) {
+function EachFrame({shareFood,servicePercent}) {
+  
     const [totalAmount, setTotalAmount] = useState(0);
     const [inputValue, setInputValue] = useState('');
     const [name,setName] = useState('');
+
     const handleInputChange = (event) => {
         let value = event.target.value;
         value = value.replace(/[^0-9,.， ]/g, '')
@@ -14,20 +16,21 @@ function EachFrame({shareFood,servicePercent }) {
         setTotalAmount(sum);
       };
 
-      const calculateFinalTotal = () => {
+    const calculateFinalTotal = () => {
         const temporaryTotal = parseFloat(totalAmount);
         //add up all the share food and service charge
         const finalTotal = (temporaryTotal + parseFloat(shareFood)) * (1 + parseFloat(servicePercent));
         return finalTotal.toFixed(3);
       };
-  const frameName = (event)=>{
-    if(event.target.value.length > 18){
-         window.alert("No more than 18 words")
-    }
-    else{
-    setName(event.target.value)
-    }
-  }
+
+    const frameName = (event)=>{
+        if(event.target.value.length > 18){
+            window.alert("No more than 18 words")
+        }
+        else{
+        setName(event.target.value)
+        }
+      }
 
   return (
     <div className='frame-wrapper'>

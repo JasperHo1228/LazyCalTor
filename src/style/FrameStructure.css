@@ -1,4 +1,3 @@
-
 .output-frame-container{
     padding: 1.5rem;
 }
@@ -26,6 +25,26 @@
     flex-direction: column;
     background-color: #16A39E;
 }
+
+.notice-wrapper{
+    padding-left: 5.5rem;
+    padding-right: 5.5rem;
+}
+
+.notice-container{
+    margin-top: 2rem;
+    padding-top: 0.5rem;
+    padding-bottom:2rem;
+
+    background-color: #16A39E;
+    border-radius: 0.5rem;
+}
+
+  .notice-text{
+       font-size: large;
+       font-weight: 600;
+       color: #FCD53B;
+ }
 
 .share-info {
     display: flex;
@@ -89,6 +108,7 @@
         padding-top: .8rem;
         padding-bottom: .8rem;
     }
+
     .frame-group{
         flex-wrap: nowrap;
         flex-direction: column;
