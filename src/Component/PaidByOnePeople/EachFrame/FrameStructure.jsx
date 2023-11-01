@@ -122,20 +122,19 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                            autoComplete="off"/>
                     <div className='per-person'>Per Person: ${shareFood.toFixed(4)}</div>
                 </div>
-                <div className="share-assholefrd">
+                <div className="share-info">
                   <div className='example2-assholefrd-wrapper'>
                     <div className='example2-assholefrd-container'>
                   <h3>Split the food who didn't have</h3>
                   <h4>Input example: (3+3)/2 | 3*7 <br/>
-                      | means split two equations
-                      <br/>
-                      Output
-                      <br/> 
+                      | means split two equations    
+                      <p>Output:</p>            
                       Result 1: $ 3,
                       Result 2: $ 21
                   </h4>
                   </div>
                   </div>
+                 
                 <input placeholder = "Fucking Asshole Frd" className='input-field-share' value={inputValue3}  onChange={handleInputChange}/>
                 <div className='assholeFrd-container'>
                   <div className='assholeFrd-info'>
