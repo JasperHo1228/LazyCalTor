@@ -7,12 +7,12 @@ function NumberOfFrame({toggled}) {
     const [frameCount,setFrameCount] = useState("");
     const [warning,setWarning] = useState(null);
     const [inputValue, setInputValue] = useState('');
-
+    
      //generate an array frame
     const generateFrame = (count) => {
       setWarning(parseInt(count));
       const framesArray = Array.from({ length: count }, (_, index) => ({
-        id: index + 1,
+        id: index,
       }));
       setNumberFrames(framesArray);
     };

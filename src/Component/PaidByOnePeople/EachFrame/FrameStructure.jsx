@@ -1,4 +1,4 @@
-import React,{useState,useReducer} from 'react'
+import React,{useState,useReducer,useEffect} from 'react'
 import Warningtext from "../Warningtext";
 import EachFrame from "./EachFrameInfo";
 import EachMessyFrame from '../../PaidByMultiplePeople/EachMessyFrame';
@@ -28,7 +28,7 @@ const reducer = (state, action) => {
     case 'SET_SHARE_FOOD_INPUT':
       return { ...state, shareFoodInput: action.payload };
     case 'SET_ASSHOLE_FRD_INPUT':
-      return { ...state, assholeFrd: action.payload };
+      return { ...state, assholeFrdInput: action.payload };
     case 'SET_RESULTS':
       return { ...state, results: action.payload };
     case 'SET_NOT_ALL_SHARE':
@@ -105,8 +105,8 @@ const FrameOuterPart = ({framesArray,toggled})=>{
       dispatch({ type: 'SET_RESULTS', payload: results.join(', ') });
     };
     
-      // Initialize an array to store the latest total amounts
-      const [frameTotals, setFrameTotals] = useState(Array(framesArray.length).fill(0));
+    const [frameTotals, setFrameTotals] = useState(Array.from({ length: framesArray.length }, () => 0));
+
 
       const handleUpdateTotalAmount = (index, frameTotal) => {
         // Update the total amount for a specific frame
@@ -114,7 +114,20 @@ const FrameOuterPart = ({framesArray,toggled})=>{
         updatedFrameTotals[index] = frameTotal;
         setFrameTotals(updatedFrameTotals);
       }
-   
+
+      useEffect(() => {
+        if (!toggled || framesArray.length !== frameTotals.length || toggled) {
+          setFrameTotals(Array(framesArray.length).fill(0));
+          dispatch({ type: 'SET_NOT_ALL_SHARE', payload: 0 });
+          dispatch({ type: 'SET_RESULTS', payload:''});
+          dispatch({ type: 'SET_ASSHOLE_FRD_INPUT', payload:''});
+          dispatch({ type: 'SET_SERVICE_CHARGE_INPUT', payload: '' });
+          dispatch({ type: 'SET_SERVICE_PERCENT', payload: 0});
+          dispatch({ type: 'SET_SHARE_FOOD_INPUT', payload: '' });
+          dispatch({ type: 'SET_SHARE_FOOD', payload: 0 });
+        }
+      }, [ framesArray,toggled,frameTotals.length]);
+
     return(
       <>
          <div className='notice-wrapper'>
@@ -159,7 +172,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
               <div className='TotalBill-info'>
               Your Bill: $
               {
-                frameTotals.slice(1).reduce((total, frameTotal) => {
+                frameTotals.slice(0).reduce((total, frameTotal) => {
                   const currentTotal = Calculator({
                     totalAmount: frameTotal,
                     shareFood: state.shareFood,
@@ -172,6 +185,20 @@ const FrameOuterPart = ({framesArray,toggled})=>{
               </div>
               </div>
             </div>
+
+        {/* check the number of array is vaild or not */}
+        {/* <div>
+            {
+              frameTotals.map((frameTotal, index) => (
+            (
+                  <div key={index}>Frame {index} Total: ${(
+                    (parseFloat(frameTotal) + parseFloat(state.shareFood) + parseFloat(state.notAllShare)) *
+                    (1 + parseFloat(state.servicePercent))
+                  ).toFixed(3)}</div>
+                )
+              ))
+            }
+          </div> */}
 
         {/* share food frame */}
         <div className="share-frame-wrapper">
@@ -197,8 +224,8 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                     <h4>Input example: (3+3)/2 | 3*7 <br/>
                         | means split two equations    
                         <p>Output:</p>            
-                        Result 1: $ 3,
-                        Result 2: $ 21
+                        Food 1: $ 3,
+                        Food 2: $ 21
                       <p className='waring-text-assholefrd'>Be Careful If you see Result: $0 all <br/>
                          the money in this part won't be added 
                       </p>
