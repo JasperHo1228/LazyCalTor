@@ -128,7 +128,9 @@
     font-weight: 600;
     color: #FCD53B;
 }
-
+.waring-text-assholefrd{
+    color: #c1063e;
+}
 @media screen and (max-width:500px) {
     .notice-wrapper{
         padding-left: 1.5rem;

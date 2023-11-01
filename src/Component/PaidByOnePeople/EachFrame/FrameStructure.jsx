@@ -77,7 +77,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
           return `Result ${index + 1}: $${result.toFixed(3)}`;
         } catch (error) {
           total=0;
-          return `Result ${index + 1}: ${0}`;
+          return `Result ${index + 1}: $0.000`;
         }
       });
         setNotAllShare(total);
@@ -132,6 +132,9 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                       <p>Output:</p>            
                       Result 1: $ 3,
                       Result 2: $ 21
+                      <p className='waring-text-assholefrd'>Be Careful If you see Result: $0 all <br/>
+                         the money in this part won't be added 
+                      </p>
                   </h4>
                   </div>
                   </div>
