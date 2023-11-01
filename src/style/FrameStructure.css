@@ -131,6 +131,20 @@
 .waring-text-assholefrd{
     color: #c1063e;
 }
+
+.TotalBill-checking-wrapper{
+    padding: 2rem;
+}
+
+.TotalBill-checking-container{
+    background-color: #FCD53B;
+    border-radius:0.5rem;
+    padding: 2.5rem;
+}
+.TotalBill-info{
+    font-size: large;
+    font-weight: 600;
+}
 @media screen and (max-width:500px) {
     .notice-wrapper{
         padding-left: 1.5rem;
