@@ -76,7 +76,8 @@ const FrameOuterPart = ({framesArray,toggled})=>{
           total += result;
           return `Result ${index + 1}: $${result.toFixed(3)}`;
         } catch (error) {
-          return `Result ${index + 1}: Invalid calculation`;
+          total=0;
+          return `Result ${index + 1}: ${0}`;
         }
       });
         setNotAllShare(total);

@@ -12,7 +12,7 @@ function App() {
           懶9追數機
       </h1>
       <div className='mode-wrapper'>
-        <div className={`flexCenter mode-container ${toggled ? 'toggled' : ''}`}>
+        <div className={`flexColCenter mode-container ${toggled ? 'toggled' : ''}`}>
         {toggled? <h3>One Person Mode</h3>:<h3>Messy Mode</h3>}
         <button className={`change-mode-button ${toggled ? 'toggled' : ''}`} onClick={() => handleToggleBtn()}>
         </button>

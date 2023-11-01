@@ -62,6 +62,7 @@
     border-radius: 0.5rem;
     background-color: #b49106;
     padding: 1.5rem;
+    color: #fff;
   }
 
   .label-share-info {
@@ -125,6 +126,7 @@
     width: 300px;
     font-size: large;
     font-weight: 600;
+    color: #FCD53B;
 }
 
 @media screen and (max-width:500px) {

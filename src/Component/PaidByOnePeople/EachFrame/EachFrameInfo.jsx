@@ -19,13 +19,7 @@ function EachFrame({shareFood,servicePercent,notAllShare}) {
     const calculateFinalTotal = () => {
         const temporaryTotal = parseFloat(totalAmount);
         //add up all the share food and service charge
-        let finalTotal;
-        if(isNaN(parseFloat(notAllShare))){
-          finalTotal = (temporaryTotal + parseFloat(shareFood)) * (1 + parseFloat(servicePercent));
-        }
-        else{
-           finalTotal = (temporaryTotal + parseFloat(shareFood) + parseFloat(notAllShare)) * (1 + parseFloat(servicePercent));
-      }
+        const finalTotal = (temporaryTotal + parseFloat(shareFood) + parseFloat(notAllShare)) * (1 + parseFloat(servicePercent));
         return finalTotal.toFixed(3);
       };
 
