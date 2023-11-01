@@ -7,13 +7,16 @@
     position: relative;
     display: block;
     width: 100%;
-    background-color: rgb(124, 145, 221);
     padding-top: 2.5rem;
     padding-bottom: 2.5rem;
     border-radius: 0.5rem;
 }
 
-.upper-frame-section{
+.one-person-verion{
+    background-color: rgb(124, 145, 221);
+}
+
+.frame-content{
     padding: 1.5rem;
     position: relative;
     display: flex;
@@ -23,10 +26,14 @@
 }
 
 .each-frame-title{
-    color: #ffe341;
     font-weight: 700;
     font-size: x-large;
 }
+
+.one-person-title-color{
+    color: #ffe341;
+}
+
 
 .input-field{
     padding:0.8rem;

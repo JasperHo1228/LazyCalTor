@@ -1,9 +1,10 @@
 import React from "react";
-import '../style/Warningtext.css'
+import '../../style/Warningtext.css'
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import Aladdin from "../Image/Aladdin.png"
-import Jasmine from "../Image/Jasmine-Profile1.webp"
-const Warningtext = ({ number }) => {
+import Aladdin from "../../Image/Aladdin.png"
+import Jasmine from "../../Image/Jasmine-Profile1.webp"
+
+const Warningtext = ({ number,toggled }) => {
     if (number < 0 || number === 0) {
         return (
           <div  className="warning-text">
@@ -29,6 +30,8 @@ const Warningtext = ({ number }) => {
       } else {
         return (
           <div  className="warning-text">
+            {toggled ? <h3 className="warning-title-1">Paid By One Person Mode</h3>
+            :<h3 className="warning-title-2">Paid By Different Person Mode</h3>}
             <br />
             Please enter a reasonable number
             <br />

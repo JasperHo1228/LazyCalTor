@@ -33,25 +33,38 @@
 
 .notice-container{
     margin-top: 2rem;
-    padding-top: 0.5rem;
-    padding-bottom:2rem;
-    background-color: #16A39E;
-    border-radius: 0.5rem;
+
 }
 
   .notice-text{
        font-size: large;
        font-weight: 600;
+       background-color: #16A39E;
        color: #FCD53B;
+       border-radius: 0.5rem;
+       padding-left:1.5rem;
+       padding-right:1.5rem;
+       padding-top:0.5rem;
+       padding-bottom:2.5rem;
  }
-
+.share-assholefrd{
+    padding-bottom: 1.5rem;
+}
 .share-info {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1.5rem;
   }
-  
+  .example2-assholefrd-wrapper{
+    margin-bottom: 1.5rem;
+  }
+
+  .example2-assholefrd-container{
+    background-color: #b49106;
+    padding: 1.5rem;
+  }
+
   .label-share-info {
     padding: 0.5rem;
     font-size: large;
@@ -80,7 +93,6 @@
     color: #b49106;
 }
 
-
 .calculate-btn-container{
     padding-bottom: 1.5rem;
 }
@@ -100,18 +112,39 @@
     background-color: rgb(247, 221, 186);
     border-radius: 0.5rem;
 }
+.assholeFrd-container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    transition: 0.5s ease-out;
+    padding: 0.5rem;
+}
+
+.assholeFrd-info{
+    padding-left: 5.5rem;
+    padding-right: 5.5rem;
+    width: 300px;
+    font-size: large;
+    font-weight: 600;
+}
 
 @media screen and (max-width:500px) {
     .notice-wrapper{
-        padding-left: 4rem;
-        padding-right: 4rem;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
     }
-    
+  
+    .assholeFrd-info{
+        padding-left: 5.5rem;
+        padding-right: 5.5rem;
+        width: auto;
+        font-size: large;
+    }
+  
     .notice-container{
         padding:2.5rem;
     }
 }
-
 
 @media screen and (max-width:280px) {
     .input-field-share{

@@ -1,0 +1,21 @@
+.frame-wrapper{
+    position: relative;
+    padding-top: 1.5rem;
+}
+
+.messy-version{
+    background-color: #d7a219;
+}
+
+.frame-content{
+    padding: 1.5rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap:1.5rem;
+    border-radius: 0.5rem;
+}
+
+.messy-title-color{
+    color:#e1fbfb;
+}

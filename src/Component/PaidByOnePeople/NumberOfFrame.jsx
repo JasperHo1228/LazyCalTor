@@ -1,8 +1,8 @@
 import React,{useState} from "react";
-import '../style/NumberOfFrame.css';
-import FrameStructure from "./EachFrame/FrameStructure";
+import '../../style/NumberOfFrame.css'
+import FrameStructure from "../PaidByOnePeople/EachFrame/FrameStructure";
 
-function NumberOfFrame() {
+function NumberOfFrame({toggled}) {
     const [frames,setNumberFrames] = useState([]);
     const [frameCount,setFrameCount] = useState("");
     const [warning,setWarning] = useState(null);
@@ -40,9 +40,11 @@ function NumberOfFrame() {
        <div className="btn-container">
        <button className='tap-me' onClick = {()=> generateFrame(frameCount)}>撳掣</button>
        </div>
+       <FrameStructure framesArray = {frames}  
+                       warningTextStatus={warning} 
+                       toggled={toggled}
+                       className="output-frame-container" />
        
-       <FrameStructure framesArray = {frames}  warningTextStatus={warning} className="output-frame-container" />
-      
     </div>
   )
 }

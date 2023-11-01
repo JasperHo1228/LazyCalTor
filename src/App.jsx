@@ -1,14 +1,24 @@
-import React from 'react';
+import React,{useState} from 'react';
+import NumberOfFrame from './Component/PaidByOnePeople/NumberOfFrame';
 import './App.css';
-import NumberOfFrame from './Component/NumberOfFrame';
 function App() {
+  const [toggled,setToggle] = useState(true);
+  const handleToggleBtn = ()=>{
+    setToggle(!toggled)
+  }
   return (
     <div className="App">
       <h1>Lazy Ass Pay me back Calculator<br/>
           懶9追數機
       </h1>
-      <h2>I can't imagine how lazy you are...</h2>
-        <NumberOfFrame/>
+      <div className='mode-wrapper'>
+        <div className={`flexCenter mode-container ${toggled ? 'toggled' : ''}`}>
+        {toggled? <h3>One Person Mode</h3>:<h3>Messy Mode</h3>}
+        <button className={`change-mode-button ${toggled ? 'toggled' : ''}`} onClick={() => handleToggleBtn()}>
+        </button>
+        </div>
+      </div>
+        <NumberOfFrame toggled={toggled}/>
         <div className='copyright'>© 2023 J-Ho All rights reserved whatever la</div>
     </div>
   );
