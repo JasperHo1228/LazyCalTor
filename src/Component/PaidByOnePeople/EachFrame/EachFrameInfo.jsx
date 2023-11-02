@@ -40,7 +40,7 @@ function EachFrame({shareFood,servicePercent,notAllShare,onUpdateTotalAmount,fra
             <div className='frame-content'>
                 <div className='each-frame-title one-person-title-color'>{name}</div>
                   <input type='text' onChange={frameName} placeholder="Name" className='input-field' name='name' autoComplete="off"/>
-                  <input onChange={handleInputChange} value={inputValue} placeholder="Enter the price amount" className='input-field' name="price" autoComplete="off"/>
+                  <input type='text' onChange={handleInputChange} value={inputValue} placeholder="Enter the price amount" className='input-field' name="price" autoComplete="off"/>
                 <div className="total-amount"> Total: ${getTotalPrice3digits()}</div>
           </div>
           </div>

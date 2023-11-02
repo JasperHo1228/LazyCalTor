@@ -210,6 +210,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                            placeholder="Share Food" 
                            className='input-field-share'  
                            name="shareFood" 
+                           type='text'
                            autoComplete="off"/>
                     <div className='per-person'>Per Person: ${state.shareFood.toFixed(4)}</div>
                 </div>
@@ -233,7 +234,8 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                   </div>
                   </div>
                   {/* start to input the price  */}
-                  <input placeholder = "Fucking Asshole Frd" className='input-field-share' value={state.assholeFrdInput}  onChange={assholeFrdInput}/>
+                  <input type='text' placeholder = "Fucking Asshole Frd" 
+                         className='input-field-share' value={state.assholeFrdInput}  onChange={assholeFrdInput}/>
                   <div className='assholeFrd-container'>
                     <div className='assholeFrd-info'>
                           {state.results}
@@ -245,6 +247,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                 <div className="share-info">
                     <input onChange = {percentage_service} 
                             name="serviceCharge"
+                            type='text'
                             value={state.serviceChargeInput} 
                             placeholder="Service Charge %" 
                             className='input-field-share' 

@@ -93,6 +93,7 @@
     color: #b49106;
 }
 
+
 .calculate-btn-container{
     padding-bottom: 1.5rem;
 }
@@ -165,14 +166,17 @@
 
 @media screen and (max-width:280px) {
     .input-field-share{
+        font-size: medium;
         padding:0;
         padding-top: .8rem;
         padding-bottom: .8rem;
+    }
+    .input-field-share[type=text]{
+        padding: 15px 7px;
     }
 
     .frame-group{
         flex-wrap: nowrap;
         flex-direction: column;
     }
-    
 }

@@ -48,8 +48,16 @@
     font-size: large;
 }
 
-
 .total-amount{
     font-size: large;
     font-weight: 600;
+}
+
+@media screen and (max-width:280px) {
+    .input-field{
+        font-size: small;
+    }
+    .input-field[type=text]{
+        padding: 15px 7px;
+    }
 }
