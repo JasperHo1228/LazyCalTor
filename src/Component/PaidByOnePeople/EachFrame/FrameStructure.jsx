@@ -151,6 +151,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                         notAllShare={state.notAllShare}
                         onUpdateTotalAmount={handleUpdateTotalAmount}
                         frameId={frame.id}
+                        arrayLength={framesArray.length}
                         /> 
                 :
               <EachMessyFrame />
