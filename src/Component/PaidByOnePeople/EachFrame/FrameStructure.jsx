@@ -154,7 +154,13 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                         arrayLength={framesArray.length}
                         /> 
                 :
-              <EachMessyFrame />
+              <EachMessyFrame shareFood={state.shareFood} 
+                              servicePercent={state.servicePercent} 
+                              notAllShare={state.notAllShare}
+                              onUpdateTotalAmount={handleUpdateTotalAmount}
+                              frameId={frame.id}
+                              totalPerson = {framesArray.length}
+                              />
             }
             </div>
           </div>
@@ -171,7 +177,8 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                 睇吓個數係咪同你張單一樣！
               </h3>
               <div className='TotalBill-info'>
-              Your Bill: $
+                {toggled ?
+              <>Your Bill: $</>:<>Share Food Total: $</>}
               {
                 frameTotals.slice(0).reduce((total, frameTotal) => {
                   const currentTotal = Calculator({
@@ -186,7 +193,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
               </div>
               </div>
             </div>
-
+        
         {/* check the number of array is vaild or not */}
         {/* <div>
             {

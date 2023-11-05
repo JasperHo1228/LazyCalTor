@@ -19,3 +19,30 @@
 .messy-title-color{
     color:#e1fbfb;
 }
+
+.messy-mode-share-food{
+    text-align: start;
+    padding-left: 0.2rem;
+    font-weight: 600;
+    color:#057a76;
+}
+
+.messy-total-amount{
+    color:#e1fbfb;
+    font-weight: 600;
+    font-size: large;
+    text-align: start;
+    padding-left: 0.2rem;
+}
+
+.messy-mode-notShare-Input{
+    gap:0.5rem;
+}
+
+.notshare-text-color{
+    color: #000;
+}
+
+.not-need-to-pay-title{
+    text-align: start;
+}
