@@ -106,13 +106,20 @@ const FrameOuterPart = ({framesArray,toggled})=>{
     };
     
     const [frameTotals, setFrameTotals] = useState(Array.from({ length: framesArray.length }, () => 0));
+    
+    const [frameNotShare, setframeNotShare] = useState(Array.from({length: framesArray.length }, () => 0));
 
-
-      const handleUpdateTotalAmount = (index, frameTotal) => {
+    const handleUpdateTotalAmount = (index, frameTotal) => {
         // Update the total amount for a specific frame
         const updatedFrameTotals = [...frameTotals];
         updatedFrameTotals[index] = frameTotal;
         setFrameTotals(updatedFrameTotals);
+      }
+
+    const handleUpdateNotShareFood = (index, notShareFrame) => {
+        const updatedFrameTotals = [...frameNotShare];
+        updatedFrameTotals[index] = notShareFrame;
+        setframeNotShare(updatedFrameTotals);
       }
 
       useEffect(() => {
@@ -127,6 +134,29 @@ const FrameOuterPart = ({framesArray,toggled})=>{
           dispatch({ type: 'SET_SHARE_FOOD', payload: 0 });
         }
       }, [ framesArray,toggled,frameTotals.length]);
+
+    const getTotalAmount = () => {
+      return(
+        frameTotals.slice(0).reduce((total, frameTotal) => {
+          const currentTotal = Calculator({
+            totalAmount: frameTotal,
+            shareFood: state.shareFood,
+            notAllShare: state.notAllShare,
+            servicePercent: state.servicePercent,
+          });
+          return total + currentTotal;
+        }, 0).toFixed(3))
+      }
+    
+
+   //display total not share food
+   const getNotShareTotal = () => {
+    return(
+      frameNotShare.slice(0).reduce((total, current) => {
+        return total + current;
+      },0).toFixed(4)
+    )
+   }
 
     return(
       <>
@@ -160,6 +190,9 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                               onUpdateTotalAmount={handleUpdateTotalAmount}
                               frameId={frame.id}
                               totalPerson = {framesArray.length}
+                              onUpdateNotShareFood = {handleUpdateNotShareFood}
+                              shareFoodTotalAmount = {getTotalAmount()}
+                              noShareFoodTotalAmount = {getNotShareTotal()}
                               />
             }
             </div>
@@ -171,24 +204,19 @@ const FrameOuterPart = ({framesArray,toggled})=>{
             {/* extra Information to check do the user input the value correctly  */}
             <div className='TotalBill-checking-wrapper'>
             <div className='TotalBill-checking-container'>
-              <h3> 
+              {toggled? <h3> 
                 Please confirm if the numbers below match your bill.
                 <br/>
                 睇吓個數係咪同你張單一樣！
-              </h3>
+              </h3>:
+              <h3>hello</h3>
+              }
+             
               <div className='TotalBill-info'>
                 {toggled ?
               <>Your Bill: $</>:<>Share Food Total: $</>}
               {
-                frameTotals.slice(0).reduce((total, frameTotal) => {
-                  const currentTotal = Calculator({
-                    totalAmount: frameTotal,
-                    shareFood: state.shareFood,
-                    notAllShare: state.notAllShare,
-                    servicePercent: state.servicePercent,
-                  });
-                  return total + currentTotal;
-                }, 0).toFixed(3)
+               getTotalAmount()
               }
               </div>
               </div>
@@ -209,6 +237,8 @@ const FrameOuterPart = ({framesArray,toggled})=>{
           </div> */}
 
         {/* share food frame */}
+      { 
+        toggled ?
         <div className="share-frame-wrapper">
                 <div className="share-frame-container">
                 <h1> Any Share Food or Service Charge?</h1>
@@ -235,12 +265,13 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                         <p>Output:</p>            
                         Food 1: $ 3,
                         Food 2: $ 21
-                      <p className='waring-text-assholefrd'>Be Careful If you see Result: $0 all <br/>
+                      <p className='waring-text-assholefrd'>Be Careful If you see Food: $0 all <br/>
                          the money in this part won't be added 
                       </p>
                       </h4>
                   </div>
                   </div>
+                  
                   {/* start to input the price  */}
                   <input type='text' placeholder = "Fucking Asshole Frd" 
                          className='input-field-share' value={state.assholeFrdInput}  onChange={assholeFrdInput}/>
@@ -256,13 +287,16 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                     <input onChange = {percentage_service} 
                             name="serviceCharge"
                             type='text'
-                            value={state.serviceChargeInput} 
+                            value = {state.serviceChargeInput} 
                             placeholder="Service Charge %" 
                             className='input-field-share' 
                             autoComplete="off"/>
                 </div>
               </div>
-         </div>
+         </div> : 
+         
+         null
+         }
       </>
     )
 }

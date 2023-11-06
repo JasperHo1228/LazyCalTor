@@ -9,6 +9,7 @@ function EachFrame({shareFood,servicePercent,notAllShare,onUpdateTotalAmount,fra
     const [inputValue, setInputValue] = useState('');
     const [name,setName] = useState('');
     const [isSameLength, setArrayLength] = useState(arrayLength);
+
     useEffect(()=>{
       if(isSameLength !== arrayLength){
         setInputValue('')
@@ -23,7 +24,7 @@ function EachFrame({shareFood,servicePercent,notAllShare,onUpdateTotalAmount,fra
         setInputValue(value);
         const sum = SumUpEach_Input(value);
         setTotalAmount(sum);
-        onUpdateTotalAmount(frameId,sum)
+        onUpdateTotalAmount(frameId,sum);
       };
     
     const frameName = (event)=>{
@@ -34,6 +35,7 @@ function EachFrame({shareFood,servicePercent,notAllShare,onUpdateTotalAmount,fra
             setName(event.target.value)
         }
       }
+
    const getTotalPrice3digits = ()=>{
        const EachFrameTotal = Calculator({
           totalAmount: totalAmount,
