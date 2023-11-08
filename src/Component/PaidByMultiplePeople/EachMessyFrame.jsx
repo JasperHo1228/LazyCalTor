@@ -1,24 +1,24 @@
-import React, { useState, useCallback,useMemo,useEffect} from 'react';
+import React, { useState,useMemo,useEffect} from 'react';
 import SumUpEach_Input from '../PaidByOnePeople/SumUpEach_Input';
 import AssholeFrdInfo from './ComponentMessyFrame/AssholeFrdInfo';
 import '../../style/PaidByMutiplePeople/EachMessyFrame.css';
 
 function EachMessyFrame({
   totalPerson,
-  onUpdateTotalAmount,
-  onUpdateNotShareFood,
   onUpdateShowMoney,
   frameId,
   shareFoodTotalAmount,
   noShareFoodTotalAmount,
   showOwnMoney,
-  toggled
+  onUpdateArrayData
 }) {
   const [name, setName] = useState('');
   const [inputValue, setInputValue] = useState('');
+  const [notNeedPayInput,setNoNeedPayInput] = useState('');
   const [totalAmount, setTotalAmount] = useState(0);
   const [noNeedPay, setNoNeedPay] = useState(0);
   const [totalNotSharePayment, setTotalNotSharePayment] = useState(0);
+  const [isNumberPeople, setNumberPeople] = useState(totalPerson);
 
   const nameFrame = (event) => {
     setName(event.target.value);
@@ -31,29 +31,26 @@ function EachMessyFrame({
 
   const notShareFoodSum = (eachNotShareFood) => {
     const updateEachNonShareFood = eachNotShareFood;
-    onUpdateNotShareFood(frameId, updateEachNonShareFood);
+    onUpdateArrayData(frameId, updateEachNonShareFood,' notShareFrame')
   };
 
   const shareFoodInputChange = (event) => {
     let value = event.target.value;
-    value = value.replace(/[^0-9,-.，| ]/g, '');
+    value = value.replace(/[^0-9,-.， ]/g, '');
     setInputValue(value);
     const sum = SumUpEach_Input(value);
     setTotalAmount(sum);
-    onUpdateTotalAmount(frameId, sum);
-    onUpdateShowMoney(frameId,moneyShould)
+    onUpdateArrayData(frameId,sum,'ShareFrameTotals')
   };
 
-  const totalPaid = useCallback(
-    (totalNotSharePayment) => {
-      return (parseFloat(totalAmount) + parseFloat(totalNotSharePayment)).toFixed(4);
-    },
-    [totalAmount]
-  );
+const totalPaid = useMemo(() => {
+  return (parseFloat(totalAmount) + parseFloat(totalNotSharePayment)).toFixed(4);
+}, [totalAmount, totalNotSharePayment]);
 
   const noNeedPaySum = (event) => {
     let value = event.target.value;
     value = value.replace(/[^0-9,. ]/g, '');
+    setNoNeedPayInput(value)
     const sum = SumUpEach_Input(value);
     setNoNeedPay(sum);
   };
@@ -67,20 +64,30 @@ function EachMessyFrame({
   }, [totalAmount, totalNotSharePayment, shareFoodTotalAmount, totalPerson, noShareFoodTotalAmount, noNeedPay]);
   
 
-  const calculatePayValue = useCallback(() => {
-    if (moneyShould === 0) {
-      return <>{name} don't have to pay</>;
-    } else if (moneyShould > 0) {
-      return <>{name} should receive ${moneyShould.toFixed(4)}</>;
-    } else {
-      return <>{name} should pay ${Math.abs(moneyShould.toFixed(4))}</>;
-    }
-  },[moneyShould,name])
+ // Determine text for who should pay/receive
+ const calculatePayValue = useMemo(() => {
+  if (moneyShould === 0) {
+    return <>{name} doesn't have to pay</>;
+  } else if (moneyShould > 0) {
+    return <>{name} should receive ${moneyShould.toFixed(4)}</>;
+  } else {
+    return <>{name} should pay ${Math.abs(moneyShould.toFixed(4))}</>;
+  }
+}, [moneyShould, name]);
 
 
  useEffect(() => {
+   if(totalPerson !== isNumberPeople){
+    setInputValue('') 
+    setTotalAmount(0) 
+    setName('')
+    setNoNeedPay(0) 
+    setNoNeedPayInput('')
+    setTotalNotSharePayment(0)
+    setNumberPeople(totalPerson)
+   }
     onUpdateShowMoney(frameId, moneyShould, name);
-  }, [moneyShould, onUpdateShowMoney, frameId,name, calculatePayValue, showOwnMoney]);
+  }, [moneyShould, onUpdateShowMoney, frameId, name, isNumberPeople, totalPerson]);
 
 
   //start calculating
@@ -90,31 +97,31 @@ function EachMessyFrame({
     0
   );
   
-  const calculateFinalResult = () => {
+   // Calculate payments that should be made to others
+   const calculateFinalResult = useMemo(() => {
     if (moneyShould < 0) {
       return (
         <div className='result-container'>
           <h2 className='result-title'>Who you should pay to?</h2>
           {positivePayments.map((person, index) => (
             <div key={index} className='should-pay-to-text-style'>
-              {`You have owned ${person.name}: $${((person.moneyShould / sumOfPositivePayments) * Math.abs(moneyShould)).toFixed(4)}`}
+              {`You owe ${person.name}: $${((person.moneyShould / sumOfPositivePayments) * Math.abs(moneyShould)).toFixed(4)}`}
               <br />
             </div>
           ))}
         </div>
       );
-    } 
-    else {
+    } else {
       return null;
     }
-  };
+  }, [moneyShould, positivePayments, sumOfPositivePayments]);
   
   return (
     <div className="frame-wrapper">
       <div className="flexColCenter frame-container messy-version">
         <div className="frame-content">
           <div className="each-frame-title messy-title-color">{name}</div>
-          <input type="text" className="input-field" onChange={nameFrame} placeholder="Name" />
+          <input type="text" className="input-field" value={name}onChange={nameFrame} placeholder="Name" />
           <div className="messy-mode-share-food">Share Food</div>
           <input type="text" className="input-field" onChange={shareFoodInputChange} value={inputValue} placeholder="Enter your payment" />
           <div className="messy-mode-share-food">Not share Food</div>
@@ -124,13 +131,14 @@ function EachMessyFrame({
             handleUpdateNotShare={handleUpdateNotShare}
             notShareFoodSum={notShareFoodSum}
           />
+
           <div className="final-total">
-            You total have paid: ${totalPaid(totalNotSharePayment)}
+            You total have paid: ${totalPaid}
           </div>
           <div className="not-need-to-pay-title">Any thing you don't have to pay?</div>
-          <input type="text" className="input-field" onChange={noNeedPaySum} placeholder="Enter the price" />
-          <div className='total-you-should-pay'> {calculatePayValue()}</div>
-            <div className='result-wrapper'>{calculateFinalResult()}</div>
+          <input type="text" className="input-field" onChange={noNeedPaySum} value={notNeedPayInput} placeholder="Enter the price" />
+          <div className='total-you-should-pay'> {calculatePayValue}</div>
+            <div className='result-wrapper'>{calculateFinalResult}</div>
         </div>
       </div>
     </div>

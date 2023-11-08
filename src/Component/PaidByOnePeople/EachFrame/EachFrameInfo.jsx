@@ -3,7 +3,7 @@ import '../../../style/EachFrame.css'
 import SumUpEach_Input from '../SumUpEach_Input';
 import Calculator from '../Calculator';
 import { useEffect } from 'react';
-function EachFrame({shareFood,servicePercent,notAllShare,onUpdateTotalAmount,frameId,arrayLength}) {
+function EachFrame({shareFood,servicePercent,notAllShare,onUpdateArrayData,frameId,arrayLength}) {
 
     const [totalAmount, setTotalAmount] = useState(0);
     const [inputValue, setInputValue] = useState('');
@@ -24,7 +24,7 @@ function EachFrame({shareFood,servicePercent,notAllShare,onUpdateTotalAmount,fra
         setInputValue(value);
         const sum = SumUpEach_Input(value);
         setTotalAmount(sum);
-        onUpdateTotalAmount(frameId,sum);
+        onUpdateArrayData(frameId,sum,'ShareFrameTotals')
       };
     
     const frameName = (event)=>{

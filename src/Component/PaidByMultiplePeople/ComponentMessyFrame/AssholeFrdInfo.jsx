@@ -11,6 +11,8 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     },
   ]);
 
+  const [isNumberPeople, setNumberPeople] = useState(totalPerson);
+
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const isDesktop = screenWidth > 570;
 
@@ -60,6 +62,19 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     }
   };
 
+  const nameFrame = (event, index) => {
+    let { value } = event.target;
+  
+    // Limit the input to 18 characters (words)
+    if (value.length > 18) {
+      value = value.slice(0, 18);
+    }
+  
+    const updatedInputGroups = [...inputGroups];
+    updatedInputGroups[index].name = value;
+    setInputGroups(updatedInputGroups);
+  };
+  
   
   const checkNumber = (total) => {
     if (total === 0) {
@@ -98,6 +113,15 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
   };
 
    useEffect(() => {
+    if(isNumberPeople !== totalPerson){
+      setInputGroups([{
+        name: '',
+        payment: '',
+        numberOfFriends: '',
+        totalAmount: 0.0000
+      }])
+        setNumberPeople(totalPerson)
+    }
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
@@ -106,7 +130,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isNumberPeople,totalPerson]);
 
 
   return (
@@ -117,6 +141,8 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
             <input
               type='text'
               name='name'
+              value={inputGroup.name}
+              onChange={(event) => nameFrame(event, index)}
               className='input-field'
               placeholder='Name of the Food'
             />
