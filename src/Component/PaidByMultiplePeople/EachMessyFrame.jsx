@@ -11,7 +11,8 @@ function EachMessyFrame({
   frameId,
   shareFoodTotalAmount,
   noShareFoodTotalAmount,
-  showOwnMoney
+  showOwnMoney,
+  toggled
 }) {
   const [name, setName] = useState('');
   const [inputValue, setInputValue] = useState('');
@@ -58,14 +59,13 @@ function EachMessyFrame({
   };
 
   const moneyShould = useMemo(() => {
-    return parseFloat(totalAmount) + parseFloat(totalNotSharePayment) - (parseFloat(shareFoodTotalAmount) / parseFloat(totalPerson)) - parseFloat(noShareFoodTotalAmount) + parseFloat(noNeedPay);
-  }, [totalAmount, totalNotSharePayment, shareFoodTotalAmount,totalPerson, noShareFoodTotalAmount, noNeedPay]);
-
-
- useEffect(() => {
-    onUpdateShowMoney(frameId, moneyShould,name);
-  }, [moneyShould, onUpdateShowMoney, frameId,name]);
-
+    let number = parseFloat(totalAmount) + 
+                 parseFloat(totalNotSharePayment) - 
+                 (parseFloat(shareFoodTotalAmount) / parseFloat(totalPerson)) 
+                 - parseFloat(noShareFoodTotalAmount) + parseFloat(noNeedPay);
+      return number
+  }, [totalAmount, totalNotSharePayment, shareFoodTotalAmount, totalPerson, noShareFoodTotalAmount, noNeedPay]);
+  
 
   const calculatePayValue = useCallback(() => {
     if (moneyShould === 0) {
@@ -76,6 +76,12 @@ function EachMessyFrame({
       return <>{name} should pay ${Math.abs(moneyShould.toFixed(4))}</>;
     }
   },[moneyShould,name])
+
+
+ useEffect(() => {
+    onUpdateShowMoney(frameId, moneyShould, name);
+  }, [moneyShould, onUpdateShowMoney, frameId,name, calculatePayValue, showOwnMoney]);
+
 
   //start calculating
   const positivePayments = showOwnMoney.filter((person) => person.moneyShould > 0);
@@ -97,7 +103,8 @@ function EachMessyFrame({
           ))}
         </div>
       );
-    } else {
+    } 
+    else {
       return null;
     }
   };
@@ -111,6 +118,7 @@ function EachMessyFrame({
           <div className="messy-mode-share-food">Share Food</div>
           <input type="text" className="input-field" onChange={shareFoodInputChange} value={inputValue} placeholder="Enter your payment" />
           <div className="messy-mode-share-food">Not share Food</div>
+
           <AssholeFrdInfo
             totalPerson={totalPerson}
             handleUpdateNotShare={handleUpdateNotShare}

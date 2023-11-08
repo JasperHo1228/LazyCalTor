@@ -141,12 +141,15 @@ const FrameOuterPart = ({framesArray,toggled})=>{
       });
     },[])
     
-
-
     useEffect(() => {
         if (!toggled || framesArray.length !== frameTotals.length || toggled) {
           setFrameTotals(Array(framesArray.length).fill(0));
-          setShowOwnMoney(Array(framesArray.length).fill(0));
+          const initialShowOwnMoney = Array(framesArray.length).fill().map(() => ({
+            name: '',
+            moneyShould: 0
+          }));
+          setShowOwnMoney(initialShowOwnMoney);
+          setframeNotShare(Array(framesArray.length).fill(0))
           dispatch({ type: 'SET_NOT_ALL_SHARE', payload: 0 });
           dispatch({ type: 'SET_RESULTS', payload:''});
           dispatch({ type: 'SET_ASSHOLE_FRD_INPUT', payload:''});
@@ -155,7 +158,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
           dispatch({ type: 'SET_SHARE_FOOD_INPUT', payload: '' });
           dispatch({ type: 'SET_SHARE_FOOD', payload: 0 });
         }
-      }, [ framesArray,toggled,frameTotals.length]);
+      }, [framesArray,toggled,frameTotals.length]);
 
 
     const getTotalAmount = () => {
@@ -218,6 +221,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                               noShareFoodTotalAmount = {getNotShareTotal()}
                               onUpdateShowMoney={handleUpdateShowMoney}
                               showOwnMoney = {showOwnMoney}
+                              toggled={toggled}
                               />
             }
             </div>

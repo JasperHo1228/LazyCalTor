@@ -10,6 +10,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
       totalAmount: 0.0000,
     },
   ]);
+
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const isDesktop = screenWidth > 570;
 
@@ -100,7 +101,6 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
-
     window.addEventListener('resize', handleResize);
 
     return () => {
