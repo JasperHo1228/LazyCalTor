@@ -1,0 +1,46 @@
+/* CSS */
+ .asshole-frd-btn {
+    align-items: center;
+    justify-content: center;
+    background-color: #4fb199;
+    border: 2px solid #111;
+    border-radius: 8px;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    font-family: Inter,sans-serif;
+    font-size: 16px;
+    height: 48px;
+    justify-content: center;
+    line-height: 24px;
+    max-width: 100%;
+    padding: 0 25px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+  }
+  
+  
+   .asshole-frd-btn:hover:after {
+    transform: translate(0, 0);
+  }
+  
+   .asshole-frd-btn:active {
+    background-color: #dafffc;
+    color: #111;
+    outline: 0;
+  }
+  
+   .asshole-frd-btn:hover {
+    outline: 0;
+  }
+  
+  @media (min-width: 768px) {
+     .asshole-frd-btn {
+      padding: 0 40px;
+    }
+  }

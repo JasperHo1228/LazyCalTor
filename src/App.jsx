@@ -1,10 +1,13 @@
-import React,{useState} from 'react';
+import React,{useState,useMemo} from 'react';
 import NumberOfFrame from './Component/PaidByOnePeople/NumberOfFrame';
 import './App.css';
 function App() {
   const [toggled,setToggle] = useState(true);
-  const handleToggleBtn = ()=>{
-    setToggle(!toggled)
+
+ const memoizedToggled = useMemo(() => toggled, [toggled]);
+
+  const handleToggleBtn = () => {
+    setToggle(!toggled);
   }
   return (
     <div className="App">
@@ -12,7 +15,7 @@ function App() {
           懶9追數機
       </h1>
       <div className='mode-wrapper'>
-        <div className={`flexColCenter mode-container ${toggled ? 'toggled' : ''}`}>
+        <div className={`flexColCenter mode-container ${memoizedToggled  ? 'toggled' : ''}`}>
         {toggled? <h3>One Person Mode</h3>:<h3>Messy Mode</h3>}
         <button className={`change-mode-button ${toggled ? 'toggled' : ''}`} onClick={() => handleToggleBtn()}>
         </button>

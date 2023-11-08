@@ -1,4 +1,4 @@
-import React,{useState,useReducer,useEffect} from 'react'
+import React,{useState,useReducer,useEffect,useCallback} from 'react'
 import Warningtext from "../Warningtext";
 import EachFrame from "./EachFrameInfo";
 import EachMessyFrame from '../../PaidByMultiplePeople/EachMessyFrame';
@@ -109,22 +109,44 @@ const FrameOuterPart = ({framesArray,toggled})=>{
     
     const [frameNotShare, setframeNotShare] = useState(Array.from({length: framesArray.length }, () => 0));
 
-    const handleUpdateTotalAmount = (index, frameTotal) => {
+    const[showOwnMoney,setShowOwnMoney] = useState(Array.from({ length: framesArray.length }, () => ({
+      name: '',
+      moneyShould: 0,
+    })));
+
+    const handleUpdateTotalAmount = useCallback((index, frameTotal) => {
         // Update the total amount for a specific frame
         const updatedFrameTotals = [...frameTotals];
         updatedFrameTotals[index] = frameTotal;
         setFrameTotals(updatedFrameTotals);
-      }
+      },[frameTotals])
 
-    const handleUpdateNotShareFood = (index, notShareFrame) => {
+    const handleUpdateNotShareFood = useCallback((index, notShareFrame) => {
         const updatedFrameTotals = [...frameNotShare];
         updatedFrameTotals[index] = notShareFrame;
         setframeNotShare(updatedFrameTotals);
-      }
+    },[frameNotShare])
 
-      useEffect(() => {
+    // show all the people who you should pay 
+    //!!! for useState set hook the following practise that can save the previous value and base on it the update
+    //if you just set the value in setShowOwnMoney it will only save the latest value the previous will be vanish
+    const handleUpdateShowMoney = useCallback((index, moneyShould,name) => {
+      setShowOwnMoney((prevShowOwnMoney) => {
+        const updatedShowOwnMoney = [...prevShowOwnMoney];
+        updatedShowOwnMoney[index] = {
+          name,
+          moneyShould
+        };
+        return updatedShowOwnMoney;
+      });
+    },[])
+    
+
+
+    useEffect(() => {
         if (!toggled || framesArray.length !== frameTotals.length || toggled) {
           setFrameTotals(Array(framesArray.length).fill(0));
+          setShowOwnMoney(Array(framesArray.length).fill(0));
           dispatch({ type: 'SET_NOT_ALL_SHARE', payload: 0 });
           dispatch({ type: 'SET_RESULTS', payload:''});
           dispatch({ type: 'SET_ASSHOLE_FRD_INPUT', payload:''});
@@ -134,6 +156,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
           dispatch({ type: 'SET_SHARE_FOOD', payload: 0 });
         }
       }, [ framesArray,toggled,frameTotals.length]);
+
 
     const getTotalAmount = () => {
       return(
@@ -193,6 +216,8 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                               onUpdateNotShareFood = {handleUpdateNotShareFood}
                               shareFoodTotalAmount = {getTotalAmount()}
                               noShareFoodTotalAmount = {getNotShareTotal()}
+                              onUpdateShowMoney={handleUpdateShowMoney}
+                              showOwnMoney = {showOwnMoney}
                               />
             }
             </div>
@@ -200,7 +225,6 @@ const FrameOuterPart = ({framesArray,toggled})=>{
         ))
         }
         </div>  
-
             {/* extra Information to check do the user input the value correctly  */}
             <div className='TotalBill-checking-wrapper'>
             <div className='TotalBill-checking-container'>
@@ -209,7 +233,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                 <br/>
                 睇吓個數係咪同你張單一樣！
               </h3>:
-              <h3>hello</h3>
+              <h3>Check Your total Share Food</h3>
               }
              
               <div className='TotalBill-info'>
@@ -222,19 +246,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
               </div>
             </div>
         
-        {/* check the number of array is vaild or not */}
-        {/* <div>
-            {
-              frameTotals.map((frameTotal, index) => (
-            (
-                  <div key={index}>Frame {index} Total: ${(
-                    (parseFloat(frameTotal) + parseFloat(state.shareFood) + parseFloat(state.notAllShare)) *
-                    (1 + parseFloat(state.servicePercent))
-                  ).toFixed(3)}</div>
-                )
-              ))
-            }
-          </div> */}
+        
 
         {/* share food frame */}
       { 

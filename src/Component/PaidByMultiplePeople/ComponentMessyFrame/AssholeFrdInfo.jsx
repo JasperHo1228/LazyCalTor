@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-
+import React, { useState,useEffect } from 'react';
+import '../../../style/PaidByMutiplePeople/AssholeFrdInfo.css'
 function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
 
   const [inputGroups, setInputGroups] = useState([
@@ -10,6 +10,8 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
       totalAmount: 0.0000,
     },
   ]);
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const isDesktop = screenWidth > 570;
 
    //add up all the not sharing food price
    const getNotShareTotal = (updatedInputGroups) => {
@@ -48,7 +50,6 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
         const eachShouldPay = payment/numberOfFriends
         updatedInputGroups[index].totalAmount = eachShouldPay.toFixed(4)
         calculateNotShareFoodSum(updatedInputGroups)
-       
     }
     else if(!isNaN(payment) && isNaN(numberOfFriends)){
         updatedInputGroups[index].totalAmount = payment
@@ -95,11 +96,24 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     calculateNotShareFoodSum(updatedInputGroups)
   };
 
+   useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
   return (
-    <div>
+    <div className='flexColCenter'>
       {inputGroups.map((inputGroup, index) => (
         <div className='flexColCenter padding-bottom' key={index}>
-          <div className='flexCenter messy-mode-notShare-Input'>
+          <div className={`${isDesktop ? 'flexCenter' : 'flexColCenter'}  messy-mode-notShare-Input`}>
             <input
               type='text'
               name='name'
@@ -122,14 +136,14 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
               onChange={(event) => notShareFoodInputChange(event, index, 'numberOfFriends')}
               placeholder='Number of Asshole FRD'
             />
-            <button onClick={() => deleteInputGroup(index)}>Delete</button>
+            <button className='asshole-frd-btn' onClick={() => deleteInputGroup(index)}>Delete</button>
           </div>
           <div className='messy-total-amount padding-top'>
              {checkNumber(inputGroup.totalAmount)}
           </div>
         </div>
       ))}
-      <button onClick={addInputGroup}>add not share food</button>
+      <button className='asshole-frd-btn' onClick={addInputGroup}>Add more row</button>
     </div>
   );
 }

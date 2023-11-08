@@ -24,7 +24,8 @@
     text-align: start;
     padding-left: 0.2rem;
     font-weight: 600;
-    color:#057a76;
+    color:#107572;
+    font-size: large;
 }
 
 .messy-total-amount{
@@ -45,4 +46,39 @@
 
 .not-need-to-pay-title{
     text-align: start;
+    color:#057a76;
+    font-weight: 600;
+}
+
+.total-you-should-pay{
+     border-radius: 0.3rem;
+     background-color: antiquewhite;
+     font-weight: 600;
+     padding-top: 1.5rem;
+     padding-bottom:1.5rem;
+}
+
+.result-wrapper{
+    background-color: #99DCE3;
+    border-radius: 0.3rem;
+}
+.reult-title{
+    color: #042123;
+}
+.result-container{
+   padding-top: 1rem;
+   padding-bottom:1rem;
+}
+
+.should-pay-to-text-style{
+    color:#D54741;
+    font-weight: 700;
+}
+
+@media screen and (max-width:768px) {
+    .not-need-to-pay-title,
+    .messy-mode-share-food
+    {
+        text-align: center;
+    }
 }
