@@ -1,4 +1,5 @@
-import React, { useState,useMemo,useEffect} from 'react';
+import React, { useMemo,useReducer, useEffect} from 'react';
+import Decimal from 'decimal.js';
 import SumUpEach_Input from '../PaidByOnePeople/SumUpEach_Input';
 import AssholeFrdInfo from './ComponentMessyFrame/AssholeFrdInfo';
 import '../../style/PaidByMutiplePeople/EachMessyFrame.css';
@@ -12,88 +13,134 @@ function EachMessyFrame({
   showOwnMoney,
   onUpdateArrayData
 }) {
-  const [name, setName] = useState('');
-  const [inputValue, setInputValue] = useState('');
-  const [notNeedPayInput,setNoNeedPayInput] = useState('');
-  const [totalAmount, setTotalAmount] = useState(0);
-  const [noNeedPay, setNoNeedPay] = useState(0);
-  const [totalNotSharePayment, setTotalNotSharePayment] = useState(0);
-  const [isNumberPeople, setNumberPeople] = useState(totalPerson);
+
+  const initialState ={
+    name:'',
+    shareFoodInput:'',
+    totalSharePayment:0,
+    notNeedPayInput:'',
+    noNeedPay:0,
+    totalNotSharePayment:0,
+    isSameNumberPeople:totalPerson
+  }
+
+  const reducer = (state, action) => {
+    switch (action.type) {
+      case 'NAME':
+        return { ...state, name: action.value };
+      case 'SHAREFOOD_INPUT':
+        return {...state, shareFoodInput: action.value};
+      case 'TOTAL_SHARE_PAYMENT':
+         return{...state, totalSharePayment:action.value};
+      case 'NO_NEED_PAY_INPUT':
+        return{...state, notNeedPayInput:action.value};
+      case 'NO_NEED_PAY':
+        return {...state, noNeedPay:action.value};
+      case 'TOTAL_NOT_SHARE_PAYMENT':
+        return{...state, totalNotSharePayment:action.value}
+      case 'IS_SAME_NUMBER_PEOPLE':
+        return {...state, isSameNumberPeople:action.value}
+      default:
+        return state;
+    }
+  }
+  const [state,dispatch] = useReducer(reducer,initialState)
+
+
 
   const nameFrame = (event) => {
-    setName(event.target.value);
+    dispatch({type:'NAME',value: event.target.value})
   };
-
+  
   const handleUpdateNotShare = (notShareFood) => {
     const updatedNotShareTotals = notShareFood;
-    setTotalNotSharePayment(updatedNotShareTotals);
+    dispatch({type:'TOTAL_NOT_SHARE_PAYMENT',value: updatedNotShareTotals})
   };
-
+  
   const notShareFoodSum = (eachNotShareFood) => {
     const updateEachNonShareFood = eachNotShareFood;
     onUpdateArrayData(frameId, updateEachNonShareFood,' notShareFrame')
   };
-
+  
+  //share fode input field control
   const shareFoodInputChange = (event) => {
     let value = event.target.value;
     value = value.replace(/[^0-9,-.， ]/g, '');
-    setInputValue(value);
+    dispatch({type:'SHAREFOOD_INPUT',value: value})
     const sum = SumUpEach_Input(value);
-    setTotalAmount(sum);
+    dispatch({type:'TOTAL_SHARE_PAYMENT', value: sum})
     onUpdateArrayData(frameId,sum,'ShareFrameTotals')
   };
 
+//check the total payment for each person
 const totalPaid = useMemo(() => {
-  return (parseFloat(totalAmount) + parseFloat(totalNotSharePayment)).toFixed(4);
-}, [totalAmount, totalNotSharePayment]);
+  return (parseFloat(state.totalSharePayment) + parseFloat(state.totalNotSharePayment)).toFixed(4);
+}, [state.totalSharePayment, state.totalNotSharePayment]);
 
   const noNeedPaySum = (event) => {
-    let value = event.target.value;
-    value = value.replace(/[^0-9,. ]/g, '');
-    setNoNeedPayInput(value)
-    const sum = SumUpEach_Input(value);
-    setNoNeedPay(sum);
+    let noNeedPayValue = event.target.value;
+    noNeedPayValue = noNeedPayValue.replace(/[^0-9,. ]/g, '');
+    dispatch({type:'NO_NEED_PAY_INPUT',value:noNeedPayValue})
+    const sum = SumUpEach_Input(noNeedPayValue);
+    dispatch({type:'NO_NEED_PAY',value:sum})
   };
 
-  const moneyShould = useMemo(() => {
-    let number = parseFloat(totalAmount) + 
-                 parseFloat(totalNotSharePayment) - 
-                 (parseFloat(shareFoodTotalAmount) / parseFloat(totalPerson)) 
-                 - parseFloat(noShareFoodTotalAmount) + parseFloat(noNeedPay);
-      return number
-  }, [totalAmount, totalNotSharePayment, shareFoodTotalAmount, totalPerson, noShareFoodTotalAmount, noNeedPay]);
-  
+  //display total not share food
+ //display total not share food
+const getNotShareTotal = useMemo(() => {
+  const decimalNotShareFoodTotalAmount = noShareFoodTotalAmount.map((value) => new Decimal(value));
+  const result = decimalNotShareFoodTotalAmount.reduce((total, current) => total.plus(current), new Decimal(0));
+
+  return result.toNumber(); // Convert the Decimal back to a regular number
+}, [noShareFoodTotalAmount]);
+
+const moneyShould = useMemo(() => {
+  const decimalShare = new Decimal(state.totalSharePayment);
+  const decimalNotShare = new Decimal(state.totalNotSharePayment);
+  const decimalShareFoodTotal = new Decimal(shareFoodTotalAmount);
+  const decimalTotalPerson = new Decimal(totalPerson);
+  const decimalNotShareTotal = new Decimal(getNotShareTotal);
+  const decimalNoNeedPay = new Decimal(state.noNeedPay);
+
+  const result = (decimalShare.plus(decimalNotShare))
+    .minus(decimalShareFoodTotal.dividedBy(decimalTotalPerson))
+    .minus(decimalNotShareTotal)
+    .plus(decimalNoNeedPay);
+
+  return result.toNumber(); // Convert the Decimal back to a regular number
+}, [state.totalSharePayment, state.totalNotSharePayment, shareFoodTotalAmount, totalPerson, getNotShareTotal, state.noNeedPay]);
+
 
  // Determine text for who should pay/receive
  const calculatePayValue = useMemo(() => {
   if (moneyShould === 0) {
-    return <>{name} doesn't have to pay</>;
+    return <>You don't have to pay</>;
   } else if (moneyShould > 0) {
-    return <>{name} should receive ${moneyShould.toFixed(4)}</>;
+    return <>{state.name} should receive ${moneyShould.toFixed(4)}</>;
   } else {
-    return <>{name} should pay ${Math.abs(moneyShould.toFixed(4))}</>;
+    return <>{state.name} should pay ${Math.abs(moneyShould.toFixed(4))}</>;
   }
-}, [moneyShould, name]);
+}, [moneyShould, state.name]);
 
 
  useEffect(() => {
-   if(totalPerson !== isNumberPeople){
-    setInputValue('') 
-    setTotalAmount(0) 
-    setName('')
-    setNoNeedPay(0) 
-    setNoNeedPayInput('')
-    setTotalNotSharePayment(0)
-    setNumberPeople(totalPerson)
+   if(totalPerson !== state.isSameNumberPeople){
+    dispatch({type:'SHAREFOOD_INPUT',value:''})
+    dispatch({type:'TOTAL_SHARE_PAYMENT',value:0}) 
+    dispatch({type:'NAME',value:''})
+    dispatch({type:'NO_NEED_PAY_INPUT',value:''})
+    dispatch({type:'NO_NEED_PAY',value:0})
+    dispatch({type:'TOTAL_NOT_SHARE_PAYMENT',value:0})
+    dispatch({type:'IS_SAME_NUMBER_PEOPLE',value:totalPerson})
    }
-    onUpdateShowMoney(frameId, moneyShould, name);
-  }, [moneyShould, onUpdateShowMoney, frameId, name, isNumberPeople, totalPerson]);
+    onUpdateShowMoney(frameId, moneyShould, state.name);
+  }, [moneyShould, onUpdateShowMoney, frameId, state.name, state.isSameNumberPeople, totalPerson]);
 
 
   //start calculating
   const positivePayments = showOwnMoney.filter((person) => person.moneyShould > 0);
   const sumOfPositivePayments = positivePayments.reduce(
-    (sum, person) => sum + person.moneyShould,
+    (currentTotal, person) => currentTotal + person.moneyShould,
     0
   );
   
@@ -120,12 +167,11 @@ const totalPaid = useMemo(() => {
     <div className="frame-wrapper">
       <div className="flexColCenter frame-container messy-version">
         <div className="frame-content">
-          <div className="each-frame-title messy-title-color">{name}</div>
-          <input type="text" className="input-field" value={name}onChange={nameFrame} placeholder="Name" />
+          <div className="each-frame-title messy-title-color">{state.name}</div>
+          <input type="text" className="input-field" value={state.name} onChange={nameFrame} placeholder="Name" />
           <div className="messy-mode-share-food">Share Food</div>
-          <input type="text" className="input-field" onChange={shareFoodInputChange} value={inputValue} placeholder="Enter your payment" />
+          <input type="text" className="input-field" onChange={shareFoodInputChange} value={state.shareFoodInput} placeholder="Enter your payment" />
           <div className="messy-mode-share-food">Not share Food</div>
-
           <AssholeFrdInfo
             totalPerson={totalPerson}
             handleUpdateNotShare={handleUpdateNotShare}
@@ -136,7 +182,7 @@ const totalPaid = useMemo(() => {
             You total have paid: ${totalPaid}
           </div>
           <div className="not-need-to-pay-title">Any thing you don't have to pay?</div>
-          <input type="text" className="input-field" onChange={noNeedPaySum} value={notNeedPayInput} placeholder="Enter the price" />
+          <input type="text" className="input-field" onChange={noNeedPaySum} value={state.notNeedPayInput} placeholder="Enter the price" />
           <div className='total-you-should-pay'> {calculatePayValue}</div>
             <div className='result-wrapper'>{calculateFinalResult}</div>
         </div>

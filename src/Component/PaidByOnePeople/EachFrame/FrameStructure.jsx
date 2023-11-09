@@ -181,18 +181,11 @@ const FrameOuterPart = ({framesArray,toggled})=>{
             servicePercent: state.servicePercent,
           });
           return total + currentTotal;
-        }, 0).toFixed(3))
+        }, 0))
       }
     
 
-      //display total not share food
-      const getNotShareTotal = () => {
-        return(
-          state.frameNotShare.slice(0).reduce((total, current) => {
-            return total + current;
-          },0).toFixed(4)
-        )
-      }
+
 
     return(
       <>
@@ -227,7 +220,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                               frameId={frame.id}
                               totalPerson = {framesArray.length}
                               shareFoodTotalAmount = {getTotalAmount()}
-                              noShareFoodTotalAmount = {getNotShareTotal()}
+                              noShareFoodTotalAmount = {state.frameNotShare}
                               onUpdateShowMoney={handleUpdateShowMoney}
                               onUpdateArrayData={handleUpdateArrayData}
                               showOwnMoney = {showOwnMoney}
@@ -254,8 +247,9 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                 {toggled ?
               <>Your Bill: $</>:<>Share Food Total: $</>}
               {
-               getTotalAmount()
+               getTotalAmount().toFixed(3)
               }
+          
               </div>
               </div>
             </div>

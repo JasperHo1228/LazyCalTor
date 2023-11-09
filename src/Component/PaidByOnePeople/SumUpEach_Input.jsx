@@ -7,7 +7,7 @@ const SumUpEach_Input =  (inputValue) => {
       const floatValue = parseFloat(currValue) || 0;
       return total + floatValue;
     }, 0);
-    return sum.toFixed(3)
+    return sum.toFixed(5)
 }
 
 export default SumUpEach_Input;
