@@ -12,7 +12,6 @@ function App() {
   return (
     <div className="App">
       <h1>Lazy Ass Pay me back Calculator<br/>
-          懶9追數機
       </h1>
       <div className='mode-wrapper'>
         <div className={`flexColCenter mode-container ${memoizedToggled  ? 'toggled' : ''}`}>
@@ -22,7 +21,7 @@ function App() {
         </div>
       </div>
         <NumberOfFrame toggled={toggled}/>
-        <div className='copyright'>© 2023 J-Ho All rights reserved whatever la</div>
+        <div className='copyright'>© 2023 J-Ho All rights reserved whatever...</div>
     </div>
   );
 }

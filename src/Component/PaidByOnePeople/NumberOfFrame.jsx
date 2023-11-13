@@ -38,7 +38,7 @@ function NumberOfFrame({toggled}) {
       />
       </div>
        <div className="btn-container">
-       <button className='tap-me' onClick = {()=> generateFrame(frameCount)}>撳掣</button>
+       <button className='tap-me' onClick = {()=> generateFrame(frameCount)}>Click Me</button>
        </div>
        <FrameStructure framesArray = {frames}  
                        warningTextStatus={warning} 

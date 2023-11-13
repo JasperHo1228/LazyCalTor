@@ -11,7 +11,7 @@ import '../../../style/FrameStructure.css'
 const FrameStructure = ({ framesArray, warningTextStatus,toggled }) => {
   
   return(
-    framesArray.length >= 2 ? (
+    framesArray.length >= 2 && framesArray.length <= 200? (
          //print out array of frame
          <FrameOuterPart framesArray={framesArray} toggled={toggled}/>
     ) : (

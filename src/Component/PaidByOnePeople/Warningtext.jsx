@@ -16,18 +16,30 @@ const Warningtext = ({ number,toggled }) => {
             <LazyLoadImage src={Aladdin} className="aladdin"/>
           </div>
         );
-      } else if (number === 1) {
+      } 
+      else if (number === 1) {
         return (
           <div  className="warning-text">
             <br />
-           Are you out of your mind? <br/>Use your calculator you big brain!
+            Are you out of your mind? <br/>Use your calculator you big brain!
             <br />
-            自己用計數機啦
-            <br/>
             <LazyLoadImage src={Aladdin} className="aladdin"/>
           </div>
         );
-      } else {
+      } 
+      else if (number >= 200) {
+        return (
+          <div className="warning-text">
+            <br />
+            How is it that so many people are having dinner together?
+            <br />
+            What kind of banquet is this? No more than 200 IDIOTS!
+            <br/>
+            <LazyLoadImage src={Aladdin} className="aladdin" alt="Aladdin" />
+          </div>
+        );
+      }
+      else {
         return (
           <div  className="warning-text">
             {toggled ? <h3 className="warning-title-1">Paid By One Person Mode</h3>
@@ -35,8 +47,6 @@ const Warningtext = ({ number,toggled }) => {
             <br />
             Please enter a reasonable number
             <br />
-            請輸入一個合理數字
-            <br/>
             <LazyLoadImage src={Jasmine} className="aladdin-jasmine"/>
           </div>
         );
