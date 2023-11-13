@@ -47,10 +47,16 @@
     font-weight: 700;
     font-size: large;
 }
-
+.total-amount-bg{
+    background-color: #FFB871;
+    border-radius: 0.5rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
 .total-amount{
     font-size: large;
     font-weight: 600;
+    color: #0699a0;
 }
 
 @media screen and (max-width:280px) {

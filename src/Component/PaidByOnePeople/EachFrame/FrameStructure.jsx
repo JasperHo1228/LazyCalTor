@@ -285,7 +285,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                         <p>Output:</p>            
                         Food 1: $ 3,
                         Food 2: $ 21
-                      <p className='waring-text-assholefrd'>Be Careful If you see Food: $0 all <br/>
+                      <p className='waring-text-assholefrd'>Be Careful if Food: $0 is appeared. All <br/>
                          the money in this part won't be added 
                       </p>
                       </h4>
