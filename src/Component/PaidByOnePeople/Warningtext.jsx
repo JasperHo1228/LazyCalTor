@@ -43,7 +43,7 @@ const Warningtext = ({ number,toggled }) => {
         return (
           <div  className="warning-text">
             {toggled ? <h3 className="warning-title-1">Paid By One Person Mode</h3>
-            :<h3 className="warning-title-2">Paid By Different Person Mode</h3>}
+            :<h3 className="warning-title-2">Paid By Multiple Person Mode</h3>}
             <br />
             Please enter a reasonable number
             <br />

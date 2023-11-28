@@ -15,7 +15,7 @@ function App() {
       </h1>
       <div className='mode-wrapper'>
         <div className={`flexColCenter mode-container ${memoizedToggled  ? 'toggled' : ''}`}>
-        {toggled? <h3>One Person Mode</h3>:<h3>Messy Mode</h3>}
+        {toggled? <h3>Dine out Mode</h3>:<h3>Party Mode</h3>}
         <button className={`change-mode-button ${toggled ? 'toggled' : ''}`} onClick={() => handleToggleBtn()}>
         </button>
         </div>

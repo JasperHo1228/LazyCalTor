@@ -168,7 +168,6 @@ const FrameOuterPart = ({framesArray,toggled})=>{
         }
       }, [framesArray,toggled,state.frameTotals.length]);
 
-    
     //check the bill -- one person mode
     //check the share food amount -- messy mode
     const getTotalAmount = () => {
@@ -183,9 +182,6 @@ const FrameOuterPart = ({framesArray,toggled})=>{
           return total + currentTotal;
         }, 0))
       }
-    
-
-
 
     return(
       <>
@@ -198,6 +194,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
             </div>
           </div>
           </div>
+          <h1>Enter the price separately for what you've{toggled ? " eaten":" paid"} !!!</h1> 
         <div className="frame-group">
         {
          framesArray.map((frame) => (
@@ -261,7 +258,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
         toggled ?
         <div className="share-frame-wrapper">
                 <div className="share-frame-container">
-                <h1> Any Share Food or Service Charge?</h1>
+                <h1>Enter the price of Share Food here below</h1>
                     <div className="share-info">
                     <input onChange = {ShareFoodCalculate} 
                           value={state.shareFoodInput}
@@ -278,6 +275,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
                   {/* show the example how to use it */}
                   <div className='example2-assholefrd-wrapper'>
                     <div className='example2-assholefrd-container'>
+                    <h1>Enter the price who don't want to pay Share Food</h1>  
                     <h2>Notice!!</h2>
                     <h3>Split the bill who didn't have the food</h3>
                     <h4>Input example: (3+3)/2 | 3*7 <br/>
@@ -304,6 +302,7 @@ const FrameOuterPart = ({framesArray,toggled})=>{
 
                 {/* service charge */}
                 <div className="share-info">
+                  <h1>Enter Service Charge here below!!</h1>
                     <input onChange = {percentage_service} 
                             name="serviceCharge"
                             type='text'

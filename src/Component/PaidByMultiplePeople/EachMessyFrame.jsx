@@ -144,7 +144,7 @@ const moneyShould = useMemo(() => {
     0
   );
   
-   // Calculate payments that should be made to others
+   // Calculate the payments that who you should pay to.
    const calculateFinalResult = useMemo(() => {
     if (moneyShould < 0) {
       return (
