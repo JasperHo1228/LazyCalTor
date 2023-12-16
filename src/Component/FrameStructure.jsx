@@ -1,5 +1,5 @@
 import React from 'react'
-import Warningtext from "./PaidByOnePeople/Warningtext";
+import Warningtext from "./FrameGenerator/Warningtext";
 import FrameChoosing from './MainFramePart/FrameChoosing'
 import '../style/FrameStructure.css'
 

@@ -1,5 +1,5 @@
 import React,{useState,useMemo} from 'react';
-import NumberOfFrame from './Component/PaidByOnePeople/NumberOfFrame';
+import NumberOfFrame from './Component/FrameGenerator/NumberOfFrame';
 import './App.css';
 function App() {
   const [toggled,setToggle] = useState(true);

@@ -9,10 +9,8 @@ const Warningtext = ({ number,toggled }) => {
         return (
           <div  className="warning-text">
             <br />
-            Are you joking? Don't mess with me you twat!
+            Are you joking? Don't mess with me!
             <br />
-            咪撚玩野啦屌!
-            <br/>
             <LazyLoadImage src={Aladdin} className="aladdin"/>
           </div>
         );
@@ -21,7 +19,7 @@ const Warningtext = ({ number,toggled }) => {
         return (
           <div  className="warning-text">
             <br />
-            Are you out of your mind? <br/>Use your calculator you big brain!
+              Use your calculator!
             <br />
             <LazyLoadImage src={Aladdin} className="aladdin"/>
           </div>
@@ -33,7 +31,7 @@ const Warningtext = ({ number,toggled }) => {
             <br />
             How is it that so many people are having dinner together?
             <br />
-            What kind of banquet is this? No more than 200 IDIOTS!
+             No more than 200 please!
             <br/>
             <LazyLoadImage src={Aladdin} className="aladdin" alt="Aladdin" />
           </div>
