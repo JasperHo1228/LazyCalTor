@@ -40,27 +40,27 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     const { value } = event.target;
     const numericValue = value.replace(/[^0-9.]/g, '');
     const updatedInputGroups = [...inputGroups];
-    updatedInputGroups[index][field] = numericValue;
+    let inputValue = value.trim() === '' ? '' : numericValue;
+    updatedInputGroups[index][field] = inputValue
     setInputGroups(updatedInputGroups);
     getNotShareTotal(updatedInputGroups);
-
     // Ensure that both payment and numberOfFriends are numeric values
     const payment = parseFloat(updatedInputGroups[index].payment);
     const numberOfFriends =  totalPerson - parseFloat(updatedInputGroups[index].numberOfFriends);
-    
+   
     // Check if both values are numbers before performing the division
-    if (!isNaN(payment) && !isNaN(numberOfFriends)) {
+    if ((!isNaN(payment) && !isNaN(numberOfFriends)) && 
+         updatedInputGroups[index].numberOfFriends >= 1) {
         const eachShouldPay = payment/numberOfFriends
         updatedInputGroups[index].totalAmount = eachShouldPay.toFixed(4)
-        calculateNotShareFoodSum(updatedInputGroups)
     }
-    else if(!isNaN(payment) && isNaN(numberOfFriends)){
-        updatedInputGroups[index].totalAmount = payment
-    } 
     else {
-        updatedInputGroups[index].totalAmount = 0
+      updatedInputGroups[index].totalAmount = 0
     }
+       calculateNotShareFoodSum(updatedInputGroups)
+ 
   };
+
 
   const nameFrame = (event, index) => {
     let { value } = event.target;
@@ -76,16 +76,14 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
   };
   
   
-  const checkNumber = (total) => {
-    if (total === 0) {
-        return `each should pay: ${total}`;
-    } 
+  const checkNumber = (total,numberOfFriends) => {
+    const totalAssholeFrd = totalPerson - numberOfFriends;
     //isFinite(Infinity)should return false because Infinity is not finite.
-    else if (!isFinite(total)) {
-      return "Are you sure everyone, including yourself, is an Asshole?";
+    if (totalAssholeFrd === 0) {
+      return <>Are you sure everyone, including yourself, is an Asshole?</>;
     } 
-    else if(total <= 0){
-        return <>You are an Asshole! How many frd you've got?</>;
+    else if(totalAssholeFrd <= 0){
+      return <>You are an Asshole! How many frd you've got?</>;
     }
     else {
       return `each should pay: ${total}`;
@@ -109,11 +107,11 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     updatedInputGroups.splice(index, 1);
     setInputGroups(updatedInputGroups);
     getNotShareTotal(updatedInputGroups);
-    calculateNotShareFoodSum(updatedInputGroups)
+    calculateNotShareFoodSum(updatedInputGroups);
   };
 
    useEffect(() => {
-    if(isNumberPeople !== totalPerson){
+    if(isNumberPeople !== totalPerson || isNumberPeople > totalPerson){
       setInputGroups([{
         name: '',
         payment: '',
@@ -122,6 +120,8 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
       }])
         setNumberPeople(totalPerson)
     }
+
+
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
@@ -165,7 +165,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
             <button className='asshole-frd-btn' onClick={() => deleteInputGroup(index)}>Delete</button>
           </div>
           <div className='messy-total-amount padding-top'>
-             {checkNumber(inputGroup.totalAmount)}
+             {checkNumber(inputGroup.totalAmount,inputGroup.numberOfFriends)}
           </div>
         </div>
       ))}

@@ -86,9 +86,10 @@ const totalPaid = useMemo(() => {
   };
 
   //display total not share food
- //display total not share food
 const getNotShareTotal = useMemo(() => {
-  const decimalNotShareFoodTotalAmount = noShareFoodTotalAmount.map((value) => new Decimal(value));
+  const decimalNotShareFoodTotalAmount = noShareFoodTotalAmount.map((value) => new Decimal(value))
+                                         .filter((decimalValue) =>  decimalValue.isFinite() && decimalValue.greaterThanOrEqualTo(0));
+
   const result = decimalNotShareFoodTotalAmount.reduce((total, current) => total.plus(current), new Decimal(0));
 
   return result.toNumber(); // Convert the Decimal back to a regular number
@@ -99,19 +100,21 @@ const moneyShould = useMemo(() => {
   const decimalNotShare = new Decimal(state.totalNotSharePayment);
   const decimalShareFoodTotal = new Decimal(shareFoodTotalAmount);
   const decimalTotalPerson = new Decimal(totalPerson);
+  
   const decimalNotShareTotal = new Decimal(getNotShareTotal);
   const decimalNoNeedPay = new Decimal(state.noNeedPay);
-
+  
   const result = (decimalShare.plus(decimalNotShare))
     .minus(decimalShareFoodTotal.dividedBy(decimalTotalPerson))
     .minus(decimalNotShareTotal)
     .plus(decimalNoNeedPay);
-
+  
   return result.toNumber(); // Convert the Decimal back to a regular number
 }, [state.totalSharePayment, state.totalNotSharePayment, shareFoodTotalAmount, totalPerson, getNotShareTotal, state.noNeedPay]);
 
 
- // Determine text for who should pay/receive
+ // Determine text for how much you should pay/receive
+ // here should add the input state of asshole frd 
  const calculatePayValue = useMemo(() => {
   if (moneyShould === 0) {
     return <>You don't have to pay</>;
@@ -136,7 +139,6 @@ const moneyShould = useMemo(() => {
     onUpdateShowMoney(frameId, moneyShould, state.name);
   }, [moneyShould, onUpdateShowMoney, frameId, state.name, state.isSameNumberPeople, totalPerson]);
 
-
   //start calculating
   const positivePayments = showOwnMoney.filter((person) => person.moneyShould > 0);
   const sumOfPositivePayments = positivePayments.reduce(
@@ -146,31 +148,45 @@ const moneyShould = useMemo(() => {
   
    // Calculate the payments that who you should pay to.
    const calculateFinalResult = useMemo(() => {
-    if (moneyShould < 0) {
-      return (
-        <div className='result-container'>
-          <h2 className='result-title'>Who you should pay to?</h2>
-          {positivePayments.map((person, index) => (
-            <div key={index} className='should-pay-to-text-style'>
-              {`You owe ${person.name}: $${((person.moneyShould / sumOfPositivePayments) * Math.abs(moneyShould)).toFixed(4)}`}
-              <br />
-            </div>
-          ))}
-        </div>
-      );
-    } else {
-      return null;
-    }
+      if(moneyShould < 0){
+        return (
+          <div className='result-container'>
+            <h2 className='result-title'>Who you should pay to?</h2>
+            {positivePayments.map((person, index) => (
+              <div key={index} className='should-pay-to-text-style'>
+                {`You owe ${person.name}: $${(
+                    ((person.moneyShould / sumOfPositivePayments) * Math.abs(moneyShould)).toFixed(4))}`}
+                <br />
+              </div>
+            ))}
+            
+          </div>
+        );
+      }
   }, [moneyShould, positivePayments, sumOfPositivePayments]);
   
   return (
     <div className="frame-wrapper">
       <div className="flexColCenter frame-container messy-version">
         <div className="frame-content">
-          <div className="each-frame-title messy-title-color">{state.name}</div>
-          <input type="text" className="input-field" value={state.name} onChange={nameFrame} placeholder="Name" />
-          <div className="messy-mode-share-food">Share Food</div>
-          <input type="text" className="input-field" onChange={shareFoodInputChange} value={state.shareFoodInput} placeholder="Enter your payment" />
+          <div className="each-frame-title messy-title-color">
+               {state.name}
+          </div>
+          <input type="text" 
+                 className="input-field" 
+                 value={state.name} 
+                 onChange={nameFrame} 
+                 placeholder="Name" />
+
+          <div className="messy-mode-share-food">
+               Share Food
+          </div>
+          <input type="text" 
+                 className="input-field" 
+                 onChange={shareFoodInputChange} 
+                 value={state.shareFoodInput}
+                 placeholder="Enter your payment" />
+
           <div className="messy-mode-share-food">Not share Food</div>
           <AssholeFrdInfo
             totalPerson={totalPerson}
@@ -179,10 +195,12 @@ const moneyShould = useMemo(() => {
           />
 
           <div className="final-total">
-            You total have paid: ${totalPaid}
+            {/* this */}
+            You total have paid: ${totalPaid} 
           </div>
           <div className="not-need-to-pay-title">Any thing you don't have to pay?</div>
           <input type="text" className="input-field" onChange={noNeedPaySum} value={state.notNeedPayInput} placeholder="Enter the price" />
+          {/* this */}
           <div className='total-you-should-pay'> {calculatePayValue}</div>
             <div className='result-wrapper'>{calculateFinalResult}</div>
         </div>
@@ -192,3 +210,4 @@ const moneyShould = useMemo(() => {
 }
 
 export default EachMessyFrame;
+

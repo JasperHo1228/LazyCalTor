@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 import '../../style/NumberOfFrame.css'
-import FrameStructure from "../PaidByOnePeople/EachFrame/FrameStructure";
+import FrameStructure from "../FrameStructure";
 
 function NumberOfFrame({toggled}) {
     const [frames,setNumberFrames] = useState([]);
