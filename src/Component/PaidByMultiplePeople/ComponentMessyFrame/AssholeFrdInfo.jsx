@@ -35,7 +35,8 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
       },0)
       notShareFoodSum(price)
     }
-
+  
+  //(BUG) when I delete all the number in this field it still will affect the total amount
   const notShareFoodInputChange = (event, index, field) => {
     const { value } = event.target;
     const numericValue = value.replace(/[^0-9.]/g, '');
