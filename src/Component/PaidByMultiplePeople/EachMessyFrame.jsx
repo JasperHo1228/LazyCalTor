@@ -82,13 +82,6 @@ function EachMessyFrame({
     return (parseFloat(state.totalSharePayment) + parseFloat(state.totalNotSharePayment)).toFixed(4);
   }, [state.totalSharePayment, state.totalNotSharePayment]);
 
-  const noNeedPaySum = (event) => {
-    let noNeedPayValue = event.target.value;
-    noNeedPayValue = noNeedPayValue.replace(/[^0-9,. ]/g, '');
-    dispatch({type:'NO_NEED_PAY_INPUT',value:noNeedPayValue})
-    const sum = SumUpEach_Input(noNeedPayValue);
-    dispatch({type:'NO_NEED_PAY',value:sum})
-  };
 
   //display total not share food
 const getNotShareTotal = useMemo(() => {
