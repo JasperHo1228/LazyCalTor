@@ -7,8 +7,8 @@ import Jasmine from "../../Image/Jasmine-Profile1.webp"
 const Warningtext = ({ number,toggled }) => {
     if (number < 0 || number === 0) {
         return (
-          <div  className="warning-text">
-            <br />
+          <div className="warning-text">
+            <br/>
             Are you joking? Don't mess with me!
             <br />
             <LazyLoadImage src={Aladdin} className="aladdin"/>

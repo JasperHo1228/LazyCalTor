@@ -2,6 +2,8 @@ import React, { useMemo,useReducer, useEffect} from 'react';
 import Decimal from 'decimal.js';
 import SumUpEach_Input from '../PaidByOnePeople/SumUpEach_Input';
 import AssholeFrdInfo from './ComponentMessyFrame/AssholeFrdInfo';
+import NotNeedToPay from './ComponentMessyFrame/NotNeedToPay';
+
 import '../../style/PaidByMutiplePeople/EachMessyFrame.css';
 
 function EachMessyFrame({
@@ -11,7 +13,8 @@ function EachMessyFrame({
   shareFoodTotalAmount,
   noShareFoodTotalAmount,
   showOwnMoney,
-  onUpdateArrayData
+  onUpdateArrayData,
+  onUpdateArrayNoNeedPay
 }) {
 
   const initialState ={
@@ -32,8 +35,6 @@ function EachMessyFrame({
         return {...state, shareFoodInput: action.value};
       case 'TOTAL_SHARE_PAYMENT':
          return{...state, totalSharePayment:action.value};
-      case 'NO_NEED_PAY_INPUT':
-        return{...state, notNeedPayInput:action.value};
       case 'NO_NEED_PAY':
         return {...state, noNeedPay:action.value};
       case 'TOTAL_NOT_SHARE_PAYMENT':
@@ -45,8 +46,6 @@ function EachMessyFrame({
     }
   }
   const [state,dispatch] = useReducer(reducer,initialState)
-
-
 
   const nameFrame = (event) => {
     dispatch({type:'NAME',value: event.target.value})
@@ -62,6 +61,12 @@ function EachMessyFrame({
     onUpdateArrayData(frameId, updateEachNonShareFood,' notShareFrame')
   };
   
+  const noNeedToPay = (noNeedToPay) => {
+     const updateNoNeedPay = noNeedToPay;
+     onUpdateArrayNoNeedPay(frameId,updateNoNeedPay)
+     dispatch({type:'NO_NEED_PAY',value: updateNoNeedPay})
+  }    
+  
   //share fode input field control
   const shareFoodInputChange = (event) => {
     let value = event.target.value;
@@ -72,10 +77,10 @@ function EachMessyFrame({
     onUpdateArrayData(frameId,sum,'ShareFrameTotals')
   };
 
-//check the total payment for each person
-const totalPaid = useMemo(() => {
-  return (parseFloat(state.totalSharePayment) + parseFloat(state.totalNotSharePayment)).toFixed(4);
-}, [state.totalSharePayment, state.totalNotSharePayment]);
+  //check the total payment for each person
+  const totalPaid = useMemo(() => {
+    return (parseFloat(state.totalSharePayment) + parseFloat(state.totalNotSharePayment)).toFixed(4);
+  }, [state.totalSharePayment, state.totalNotSharePayment]);
 
   const noNeedPaySum = (event) => {
     let noNeedPayValue = event.target.value;
@@ -100,7 +105,6 @@ const moneyShould = useMemo(() => {
   const decimalNotShare = new Decimal(state.totalNotSharePayment);
   const decimalShareFoodTotal = new Decimal(shareFoodTotalAmount);
   const decimalTotalPerson = new Decimal(totalPerson);
-  
   const decimalNotShareTotal = new Decimal(getNotShareTotal);
   const decimalNoNeedPay = new Decimal(state.noNeedPay);
   
@@ -116,12 +120,12 @@ const moneyShould = useMemo(() => {
  // Determine text for how much you should pay/receive
  // here should add the input state of asshole frd 
  const calculatePayValue = useMemo(() => {
-  if (moneyShould === 0) {
+  if (moneyShould === 0 || isNaN(moneyShould)) {
     return <>You don't have to pay</>;
   } else if (moneyShould > 0) {
-    return <>{state.name} should receive ${moneyShould.toFixed(4)}</>;
+    return <div className='total-you-should-recieve-text-color'>{state.name} should receive ${moneyShould.toFixed(4)}</div>;
   } else {
-    return <>{state.name} should pay ${Math.abs(moneyShould.toFixed(4))}</>;
+    return <div className='total-you-should-pay-text-color'>{state.name} should pay ${Math.abs(moneyShould.toFixed(4))}</div>;
   }
 }, [moneyShould, state.name]);
 
@@ -131,7 +135,6 @@ const moneyShould = useMemo(() => {
     dispatch({type:'SHAREFOOD_INPUT',value:''})
     dispatch({type:'TOTAL_SHARE_PAYMENT',value:0}) 
     dispatch({type:'NAME',value:''})
-    dispatch({type:'NO_NEED_PAY_INPUT',value:''})
     dispatch({type:'NO_NEED_PAY',value:0})
     dispatch({type:'TOTAL_NOT_SHARE_PAYMENT',value:0})
     dispatch({type:'IS_SAME_NUMBER_PEOPLE',value:totalPerson})
@@ -194,13 +197,19 @@ const moneyShould = useMemo(() => {
             notShareFoodSum={notShareFoodSum}
           />
 
-          <div className="final-total">
-            {/* this */}
+         <div className='final-total-container'>
+         <div className="final-total">
             You total have paid: ${totalPaid} 
           </div>
-          <div className="not-need-to-pay-title">Any thing you don't have to pay?</div>
-          <input type="text" className="input-field" onChange={noNeedPaySum} value={state.notNeedPayInput} placeholder="Enter the price" />
-          {/* this */}
+        </div>
+       
+
+          <div className="not-need-to-pay-title ">Any thing you don't have to pay?</div>
+           <NotNeedToPay 
+           totalPerson={totalPerson}
+           noNeedToPay={noNeedToPay}
+           />
+       
           <div className='total-you-should-pay'> {calculatePayValue}</div>
             <div className='result-wrapper'>{calculateFinalResult}</div>
         </div>

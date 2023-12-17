@@ -44,8 +44,13 @@
     color: #000;
 }
 
+.final-total{
+    font-weight: 600;
+}
+
 .not-need-to-pay-title{
-    text-align: start;
+    font-size: large;
+    text-align:center;
     color:#057a76;
     font-weight: 600;
 }
@@ -58,10 +63,25 @@
      padding-bottom:1.5rem;
 }
 
+.total-you-should-pay-text-color{
+    color: #ff3d37;
+}
+
+.total-you-should-recieve-text-color{
+    color: #5f911d;
+}
+
 .result-wrapper{
     background-color: #99DCE3;
     border-radius: 0.3rem;
 }
+
+.final-total-container{
+   padding:1.5rem;
+   background-color: rgb(245, 201, 145);
+   border-radius: 0.5rem;
+}
+
 .reult-title{
     color: #042123;
 }

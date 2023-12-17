@@ -36,7 +36,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
       notShareFoodSum(price)
     }
   
-  //(BUG) when I delete all the number in this field it still will affect the total amount
+
   const notShareFoodInputChange = (event, index, field) => {
     const { value } = event.target;
     const numericValue = value.replace(/[^0-9.]/g, '');
@@ -55,11 +55,11 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
         const eachShouldPay = payment/numberOfFriends
         updatedInputGroups[index].totalAmount = eachShouldPay.toFixed(4)
     }
+    
     else {
       updatedInputGroups[index].totalAmount = 0
     }
        calculateNotShareFoodSum(updatedInputGroups)
- 
   };
 
 
@@ -116,8 +116,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
       setInputGroups([{
         name: '',
         payment: '',
-        numberOfFriends: '',
-        totalAmount: 0.0000
+        totalAmount: 0
       }])
         setNumberPeople(totalPerson)
     }

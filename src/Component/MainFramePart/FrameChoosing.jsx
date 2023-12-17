@@ -19,6 +19,7 @@ const FrameChoosing = ({framesArray,toggled})=>{
       notAllShare: 0,
       frameTotals: Array.from({ length: framesArray.length }, () => 0),
       frameNotShare: Array.from({ length: framesArray.length }, () => 0),
+      frameNoNeedToPay:Array.from({length:framesArray.length},() => 0)
     };
     
     const reducer = (state, action) => {
@@ -41,6 +42,8 @@ const FrameChoosing = ({framesArray,toggled})=>{
           return {...state, frameTotals: action.payload };
         case 'SET_NOT_SHARE_FRAME_ARRAY':
           return {...state, frameNotShare: action.payload };
+        case 'NO_NEED_TO_PAY':
+          return {...state, frameNoNeedToPay: action.payload};
         default:
           return state;
       }
@@ -113,6 +116,12 @@ const FrameChoosing = ({framesArray,toggled})=>{
         });
       }, [state.frameTotals, state.frameNotShare]);
       
+      const handleUpdateArrayNoNeedPay = useCallback((index, array)=>{
+            const updatedArray = [...state.frameNoNeedToPay];
+            updatedArray[index] = array;
+            dispatch({type:'NO_NEED_TO_PAY', payload: updatedArray});
+      },[state.frameNoNeedToPay])
+
       //show all the people who you should pay  -- party mode
       //For useState set hook the following practise that can save the previous value and base on its the update
       //if you just set the value in setShowOwnMoney({name,moneyShould}) it will only save the latest value the previous will be vanish
@@ -186,6 +195,7 @@ const FrameChoosing = ({framesArray,toggled})=>{
                                   noShareFoodTotalAmount = {state.frameNotShare}
                                   onUpdateShowMoney={handleUpdateShowMoney}
                                   onUpdateArrayData={handleUpdateArrayData}
+                                  onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
                                   showOwnMoney = {showOwnMoney}
                                   />
                 }
@@ -196,7 +206,6 @@ const FrameChoosing = ({framesArray,toggled})=>{
           </div>  
               {/* extra Information to check do the user input the value correctly */}
               <ConfirmBill totalAmount={totalAmount} toggled={toggled}/>
-
               {/* display service charge and not share food dine out mode? */}
                { 
                   toggled ?
