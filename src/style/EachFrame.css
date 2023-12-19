@@ -31,10 +31,14 @@
 }
 
 .one-person-title-color{
-    color: #ffe341;
+    color: #0f0e07;
 }
-
-
+.noNeedtoPay-one-person-mode{
+    font-size: x-large;
+    font-weight: 700;
+    text-align: start;
+    color: rgb(234, 234, 174);
+}
 .input-field{
     padding:0.8rem;
     outline: none;

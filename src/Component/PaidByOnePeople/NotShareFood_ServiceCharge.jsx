@@ -1,55 +1,68 @@
-import React from "react"
+import React,{useReducer,useEffect} from "react"
+import AssholeFrdInfo from "../PaidByMultiplePeople/ComponentMessyFrame/AssholeFrdInfo";
 const NotShareFood_ServiceCharge = ({ShareFoodCalculate, 
                                      shareFoodInputValue, 
+                                     toggled,
                                      shareFood, 
-                                     assholeFrdInputValue,
-                                     assholeFrdInputOnChange, 
-                                     result, 
+                                     totalPerson,
+                                     NotAllShareFoodOnePerson,
                                      percentage_service,
+                                     getNotShareAmount,
                                      serviceChargeInput}) => {
+    
+    const initialState ={                               
+          totalNotSharePayment:0,
+          isSameNumberPeople:totalPerson
+        }
+                                    
+    const reducer = (state, action) => {
+          switch (action.type) {
+          case 'TOTAL_NOT_SHARE_PAYMENT':
+          return{...state, totalNotSharePayment:action.value}
+          case 'IS_SAME_NUMBER_PEOPLE':
+          return {...state, isSameNumberPeople:action.value}
+          default:
+            return state;
+          }
+        }
+
+    const [state,dispatch] = useReducer(reducer,initialState)  
+                                          
+    const notShareFoodSum = (eachNotShareFood) => {
+      dispatch({type:'TOTAL_NOT_SHARE_PAYMENT',value: eachNotShareFood})
+    };
+    
+    useEffect(() => {
+      NotAllShareFoodOnePerson(state.totalNotSharePayment);
+    }, [state.totalNotSharePayment, getNotShareAmount, NotAllShareFoodOnePerson]);
+
     return(
         <div className="share-frame-wrapper">
         <div className="share-frame-container">
-        <h1>Enter the price of Share Food here below</h1>
+        <h1>Any Shared Food?</h1>
             <div className="share-info">
             <input onChange = {ShareFoodCalculate} 
                    value={shareFoodInputValue}
-                   placeholder="Share Food" 
+                   placeholder="Enter the price" 
                    className='input-field-share'  
                    name="shareFood" 
                    type='text'
                    autoComplete="off"/>
-            <div className='per-person'>Per Person: ${shareFood}</div>
+            <div className='per-person'>Each Person: ${shareFood}</div>
         </div>
 
-      {/* for some people who didn't eat the food  */}
+        {/* for some people who didn't eat the food  */}
         <div className="share-info">
           {/* show the example how to use it */}
-          <div className='example2-assholefrd-wrapper'>
-            <div className='example2-assholefrd-container'>
-            <h1>Enter the price who don't want to pay Share Food</h1>  
-            <h2>Notice!!</h2>
-            <h3>Split the bill who didn't have the food</h3>
-            <h4>Input example: (3+3)/2 | 3*7 <br/>
-                | means split two equations    
-                <p>Output:</p>            
-                Food 1: $ 3,
-                Food 2: $ 21
-              <p className='waring-text-assholefrd'>Be Careful if Food: $0 is appeared. All <br/>
-                 the money in this part won't be added 
-              </p>
-              </h4>
-          </div>
-          </div>
-          
-          {/* start to input the price  */}
-          <input type='text' placeholder = "Fucking Asshole Frd" 
-                 className='input-field-share' value={assholeFrdInputValue}  onChange={assholeFrdInputOnChange}/>
-          <div className='assholeFrd-container'>
-            <div className='assholeFrd-info'>
-                  {result}
-            </div>
-          </div>
+          <h1 className="padding-bottom one-person-mode-not-share-food-text">
+               Any Food Not Shared among All?
+          </h1>
+
+          <AssholeFrdInfo
+            totalPerson={totalPerson}
+            toggled={toggled}
+            notShareFoodSum={notShareFoodSum}
+          />
         </div>
 
         {/* service charge */}

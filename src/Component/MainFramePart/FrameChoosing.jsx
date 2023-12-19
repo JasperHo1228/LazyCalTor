@@ -2,7 +2,6 @@ import React, {useState,useReducer,useEffect,useCallback} from 'react'
 import EachFrame from "../PaidByOnePeople/EachFrame/EachFrameInfo";
 import EachMessyFrame from '../PaidByMultiplePeople/EachMessyFrame';
 import SumUpEach_Input from '../PaidByOnePeople/SumUpEach_Input';
-import {evaluate} from 'mathjs';
 import ConfirmBill from './components/ConfirmBill'
 import  { getTotalAmount }  from './components/GetTotalAmount'
 import NotShareFoodAndServiceCharge from '../PaidByOnePeople/NotShareFood_ServiceCharge'
@@ -15,11 +14,11 @@ const FrameChoosing = ({framesArray,toggled})=>{
       serviceChargeInput: '',
       shareFoodInput: '',
       assholeFrdInput: '',
-      results: '',
       notAllShare: 0,
+      noNeedPay:0,
       frameTotals: Array.from({ length: framesArray.length }, () => 0),
       frameNotShare: Array.from({ length: framesArray.length }, () => 0),
-      frameNoNeedToPay:Array.from({length:framesArray.length},() => 0)
+      frameNoNeedToPay:Array.from({length:framesArray.length},() => 0),
     };
     
     const reducer = (state, action) => {
@@ -34,15 +33,15 @@ const FrameChoosing = ({framesArray,toggled})=>{
           return { ...state, shareFoodInput: action.payload };
         case 'SET_ASSHOLE_FRD_INPUT':
           return { ...state, assholeFrdInput: action.payload };
-        case 'SET_RESULTS':
-          return { ...state, results: action.payload };
         case 'SET_NOT_ALL_SHARE':
           return { ...state, notAllShare: action.payload };
+        case 'NO_NEED_PAY':
+           return {...state, noNeedPay:action.payload};
         case 'SET_FRAME_TOTALS_ARRAY':
           return {...state, frameTotals: action.payload };
         case 'SET_NOT_SHARE_FRAME_ARRAY':
           return {...state, frameNotShare: action.payload };
-        case 'NO_NEED_TO_PAY':
+        case 'NO_NEED_TO_PAY_FRAME_ARRAY':
           return {...state, frameNoNeedToPay: action.payload};
         default:
           return state;
@@ -67,7 +66,12 @@ const FrameChoosing = ({framesArray,toggled})=>{
         const total = sum / framesArray.length;
         dispatch({ type: 'SET_SHARE_FOOD', payload: total });
         };
-     
+
+      const NotAllShareFoodOnePerson = useCallback((total) => {
+        dispatch({ type: 'SET_NOT_ALL_SHARE', payload: total });
+      }, [dispatch]);
+    
+
       //change to service charge in decimal form
       const percentage_service = (event)=>{
           let value = event.target.value;
@@ -77,34 +81,6 @@ const FrameChoosing = ({framesArray,toggled})=>{
           dispatch({ type: 'SET_SERVICE_PERCENT', payload: checkString / 100 });
         }
     
-       //the assholefrdInput is in one person mode
-       const assholeFrdInput = (event) => {
-          const inputValue = event.target.value;
-          const filteredValue = inputValue.replace(/[^0-9*()/.+-| ]/g, '');
-          dispatch({ type: 'SET_ASSHOLE_FRD_INPUT', payload: filteredValue });
-          assholeFrdCalculate(filteredValue);
-        };
-      
-       //not share food in one person mode
-       const assholeFrdCalculate =  (inputValue) => {
-        // Split the input by the | symbol to separate calculations
-        const calculations = inputValue.split('|');
-        let total = 0;
-        const results = calculations.map((calculation, index) => {
-          
-          try {
-            const result = evaluate(calculation.trim()); // Use trim to remove leading/trailing spaces
-            total += result;
-            return `Food  ${index + 1}: $${result.toFixed(3)}`;
-          } 
-          catch (error) {
-            total = 0;
-            return `Food ${index + 1}: $0.000`;
-          }
-        });
-        dispatch({ type: 'SET_NOT_ALL_SHARE', payload: total });
-        dispatch({ type: 'SET_RESULTS', payload: results.join(', ') });
-      };
       
       //add share or not share food in different array prepare for sum up
       const handleUpdateArrayData = useCallback((index, array, caseName) => {
@@ -119,8 +95,9 @@ const FrameChoosing = ({framesArray,toggled})=>{
       const handleUpdateArrayNoNeedPay = useCallback((index, array)=>{
             const updatedArray = [...state.frameNoNeedToPay];
             updatedArray[index] = array;
-            dispatch({type:'NO_NEED_TO_PAY', payload: updatedArray});
+            dispatch({type:'NO_NEED_TO_PAY_FRAME_ARRAY', payload: updatedArray});
       },[state.frameNoNeedToPay])
+
 
       //show all the people who you should pay  -- party mode
       //For useState set hook the following practise that can save the previous value and base on its the update
@@ -135,6 +112,7 @@ const FrameChoosing = ({framesArray,toggled})=>{
           return updatedShowOwnMoney;
         });
       },[])
+
   
      //reset the input and value 
       useEffect(() => {
@@ -152,6 +130,8 @@ const FrameChoosing = ({framesArray,toggled})=>{
             dispatch({ type: 'SET_SERVICE_PERCENT', payload: 0});
             dispatch({ type: 'SET_SHARE_FOOD_INPUT', payload: '' });
             dispatch({ type: 'SET_SHARE_FOOD', payload: 0 });
+            dispatch({type:'NO_NEED_TO_PAY_FRAME_ARRAY', payload :Array(framesArray.length).fill(0)})
+
           }
         }, [framesArray,toggled,state.frameTotals.length]);
        
@@ -184,11 +164,11 @@ const FrameChoosing = ({framesArray,toggled})=>{
                             onUpdateArrayData={handleUpdateArrayData}
                             frameId={frame.id}
                             arrayLength={framesArray.length}
+                            onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
                             /> 
                     :
                   <EachMessyFrame shareFood={state.shareFood} 
                                   servicePercent={state.servicePercent} 
-                                  notAllShare={state.notAllShare}
                                   frameId={frame.id}
                                   totalPerson = {framesArray.length}
                                   shareFoodTotalAmount = {totalAmount}
@@ -197,26 +177,30 @@ const FrameChoosing = ({framesArray,toggled})=>{
                                   onUpdateArrayData={handleUpdateArrayData}
                                   onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
                                   showOwnMoney = {showOwnMoney}
+                                  toggled={toggled}
                                   />
                 }
                 </div>
               </div>
             ))
             }
+       
           </div>  
               {/* extra Information to check do the user input the value correctly */}
-              <ConfirmBill totalAmount={totalAmount} toggled={toggled}/>
+              <ConfirmBill totalAmount={totalAmount} toggled={toggled} />
+              
               {/* display service charge and not share food dine out mode? */}
                { 
                   toggled ?
                   <NotShareFoodAndServiceCharge ShareFoodCalculate = {ShareFoodCalculate}     //this component is for dine out
                   shareFoodInputValue={state.shareFoodInput}
                   shareFood = {state.shareFood.toFixed(4)}
-                  assholeFrdInputValue ={state.assholeFrdInput}
-                  assholeFrdInputOnChange = {assholeFrdInput}
-                  result = {state.results}
+                  toggled={toggled}
+                  NotAllShareFoodOnePerson={NotAllShareFoodOnePerson}
+                  totalPerson = {framesArray.length}
                   percentage_service = {percentage_service}
                   serviceChargeInput = {state.serviceChargeInput}
+                  noShareFoodTotalAmount = {state.frameNotShare}
                   />
                   : 
                   null

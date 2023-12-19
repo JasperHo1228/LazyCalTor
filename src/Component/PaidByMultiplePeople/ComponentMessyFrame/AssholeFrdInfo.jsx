@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import '../../../style/PaidByMutiplePeople/AssholeFrdInfo.css'
-function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
+function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum,toggled}) {
 
   const [inputGroups, setInputGroups] = useState([
     {
@@ -44,7 +44,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     let inputValue = value.trim() === '' ? '' : numericValue;
     updatedInputGroups[index][field] = inputValue
     setInputGroups(updatedInputGroups);
-    getNotShareTotal(updatedInputGroups);
+
     // Ensure that both payment and numberOfFriends are numeric values
     const payment = parseFloat(updatedInputGroups[index].payment);
     const numberOfFriends =  totalPerson - parseFloat(updatedInputGroups[index].numberOfFriends);
@@ -60,6 +60,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
       updatedInputGroups[index].totalAmount = 0
     }
        calculateNotShareFoodSum(updatedInputGroups)
+       
   };
 
 
@@ -87,7 +88,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
       return <>You are an Asshole! How many frd you've got?</>;
     }
     else {
-      return `each should pay: ${total}`;
+      return `Each should pay: ${total}`;
     }
   };
   
@@ -103,11 +104,13 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
     ]);
   };
 
-  const deleteInputGroup = (index) => {
+  const deleteInputGroup = (index,toggled) => {
     const updatedInputGroups = [...inputGroups];
     updatedInputGroups.splice(index, 1);
     setInputGroups(updatedInputGroups);
-    getNotShareTotal(updatedInputGroups);
+    if(!toggled){
+       getNotShareTotal(updatedInputGroups);
+    }
     calculateNotShareFoodSum(updatedInputGroups);
   };
 
@@ -162,9 +165,9 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum}) {
               onChange={(event) => notShareFoodInputChange(event, index, 'numberOfFriends')}
               placeholder='Number of Asshole FRD'
             />
-            <button className='asshole-frd-btn' onClick={() => deleteInputGroup(index)}>Delete</button>
+            <button className='asshole-frd-btn' onClick={() => deleteInputGroup(index,toggled)}>Delete</button>
           </div>
-          <div className='messy-total-amount padding-top'>
+          <div className='messy-total-amount padding-top padding-bottom'>
              {checkNumber(inputGroup.totalAmount,inputGroup.numberOfFriends)}
           </div>
         </div>

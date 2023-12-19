@@ -14,14 +14,14 @@ function EachMessyFrame({
   noShareFoodTotalAmount,
   showOwnMoney,
   onUpdateArrayData,
-  onUpdateArrayNoNeedPay
+  onUpdateArrayNoNeedPay,
+  toggled
 }) {
 
   const initialState ={
     name:'',
     shareFoodInput:'',
     totalSharePayment:0,
-    notNeedPayInput:'',
     noNeedPay:0,
     totalNotSharePayment:0,
     isSameNumberPeople:totalPerson
@@ -184,9 +184,11 @@ const moneyShould = useMemo(() => {
                  placeholder="Enter your payment" />
 
           <div className="messy-mode-share-food">Not share Food</div>
+          
           <AssholeFrdInfo
             totalPerson={totalPerson}
             handleUpdateNotShare={handleUpdateNotShare}
+            toggled={toggled}
             notShareFoodSum={notShareFoodSum}
           />
 

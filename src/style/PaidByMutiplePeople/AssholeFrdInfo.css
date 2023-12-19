@@ -37,6 +37,7 @@
   
    .asshole-frd-btn:hover {
     outline: 0;
+    background-color: #7da4ed;
   }
   
   @media (min-width: 768px) {

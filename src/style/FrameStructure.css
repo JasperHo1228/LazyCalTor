@@ -58,12 +58,7 @@
     margin-bottom: 1.5rem;
   }
 
-  .example2-assholefrd-container{
-    border-radius: 0.5rem;
-    background-color: #b49106;
-    padding: 1.5rem;
-    color: #fff;
-  }
+ 
 
   .label-share-info {
     padding: 0.5rem;
@@ -94,6 +89,10 @@
 }
 
 
+.one-person-mode-not-share-food-text{
+    color: #403478;
+}
+
 .calculate-btn-container{
     padding-bottom: 1.5rem;
 }
@@ -113,13 +112,8 @@
     background-color: rgb(247, 221, 186);
     border-radius: 0.5rem;
 }
-.assholeFrd-container{
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    transition: 0.5s ease-out;
-    padding: 0.5rem;
-}
+
+
 
 .assholeFrd-info{
     padding-left: 5.5rem;
@@ -129,6 +123,7 @@
     font-weight: 600;
     color: #FCD53B;
 }
+
 .waring-text-assholefrd{
     color: #c1063e;
 }
