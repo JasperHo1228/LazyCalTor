@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from 'react';
 import '../../../style/PaidByMutiplePeople/AssholeFrdInfo.css'
-function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum,toggled}) {
+function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum, toggled, 
+                           language}) {
 
   const [inputGroups, setInputGroups] = useState([
     {
@@ -44,7 +45,8 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum,tog
     let inputValue = value.trim() === '' ? '' : numericValue;
     updatedInputGroups[index][field] = inputValue
     setInputGroups(updatedInputGroups);
-
+    if(!toggled){ getNotShareTotal(updatedInputGroups);}
+   
     // Ensure that both payment and numberOfFriends are numeric values
     const payment = parseFloat(updatedInputGroups[index].payment);
     const numberOfFriends =  totalPerson - parseFloat(updatedInputGroups[index].numberOfFriends);
@@ -88,7 +90,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum,tog
       return <>You are an Asshole! How many frd you've got?</>;
     }
     else {
-      return `Each should pay: ${total}`;
+      return `${language === 'english' ?  'Each should pay: ' : '每人要俾: ' }$${total} `;
     }
   };
   
@@ -108,9 +110,12 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum,tog
     const updatedInputGroups = [...inputGroups];
     updatedInputGroups.splice(index, 1);
     setInputGroups(updatedInputGroups);
+    
+    //run this function when it is in Party mode
     if(!toggled){
        getNotShareTotal(updatedInputGroups);
     }
+
     calculateNotShareFoodSum(updatedInputGroups);
   };
 
@@ -147,7 +152,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum,tog
               value={inputGroup.name}
               onChange={(event) => nameFrame(event, index)}
               className='input-field'
-              placeholder='Name of the Food'
+              placeholder={language === 'english' ? 'Food Name':'咩野食野'}
             />
             <input
               type='text'
@@ -155,7 +160,8 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum,tog
               className='input-field'
               value={inputGroup.payment}
               onChange={(event) => notShareFoodInputChange(event, index, 'payment')}
-              placeholder='Enter your payment'
+              placeholder={toggled ? (language === 'english' ? 'Enter the food price' : '輸入野食價錢') : 
+                                      (language === 'english' ? 'Enter your payment':'輸入你俾咗D咩')}
             />
             <input
               type='text'
@@ -163,16 +169,23 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum,tog
               className='input-field'
               value={inputGroup.numberOfFriends}
               onChange={(event) => notShareFoodInputChange(event, index, 'numberOfFriends')}
-              placeholder='Number of Asshole FRD'
+              placeholder={language === 'english' ? 'Number of exempt frd' : '幾多個唔洗俾'}
             />
-            <button className='asshole-frd-btn' onClick={() => deleteInputGroup(index,toggled)}>Delete</button>
+            <button className={toggled? 'asshole-frd-btn dine-out-mode-asshole-frd-color-btn'
+                                          :'asshole-frd-btn party-mode-asshole-frd-color-btn'} onClick={() => deleteInputGroup(index,toggled)}>
+                                          {language === 'english' ? <>Delete</> : <>Del咗佢</>} 
+                                            </button>
           </div>
           <div className='messy-total-amount padding-top padding-bottom'>
              {checkNumber(inputGroup.totalAmount,inputGroup.numberOfFriends)}
           </div>
         </div>
       ))}
-      <button className='asshole-frd-btn' onClick={addInputGroup}>Add more row</button>
+      <button className={toggled? 'asshole-frd-btn dine-out-mode-asshole-frd-color-btn'
+                                          :'asshole-frd-btn party-mode-asshole-frd-color-btn'} 
+                                           onClick={addInputGroup}>
+                                            {language === 'english' ? "Add more row" : "加多行"}
+                                           </button>
     </div>
   );
 }

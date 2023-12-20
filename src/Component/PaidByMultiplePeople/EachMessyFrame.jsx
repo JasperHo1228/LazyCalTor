@@ -15,7 +15,8 @@ function EachMessyFrame({
   showOwnMoney,
   onUpdateArrayData,
   onUpdateArrayNoNeedPay,
-  toggled
+  toggled,
+  language
 }) {
 
   const initialState ={
@@ -93,34 +94,40 @@ const getNotShareTotal = useMemo(() => {
   return result.toNumber(); // Convert the Decimal back to a regular number
 }, [noShareFoodTotalAmount]);
 
+//this function have some problem
 const moneyShould = useMemo(() => {
   const decimalShare = new Decimal(state.totalSharePayment);
   const decimalNotShare = new Decimal(state.totalNotSharePayment);
   const decimalShareFoodTotal = new Decimal(shareFoodTotalAmount);
   const decimalTotalPerson = new Decimal(totalPerson);
+
   const decimalNotShareTotal = new Decimal(getNotShareTotal);
   const decimalNoNeedPay = new Decimal(state.noNeedPay);
-  
+
   const result = (decimalShare.plus(decimalNotShare))
-    .minus(decimalShareFoodTotal.dividedBy(decimalTotalPerson))
-    .minus(decimalNotShareTotal)
-    .plus(decimalNoNeedPay);
-  
+  .minus(decimalShareFoodTotal.dividedBy(decimalTotalPerson))
+  .minus(decimalNotShareTotal)
+  .plus(decimalNoNeedPay);
+
   return result.toNumber(); // Convert the Decimal back to a regular number
-}, [state.totalSharePayment, state.totalNotSharePayment, shareFoodTotalAmount, totalPerson, getNotShareTotal, state.noNeedPay]);
+},[state.totalSharePayment, state.totalNotSharePayment, shareFoodTotalAmount, totalPerson, getNotShareTotal, state.noNeedPay])
 
 
  // Determine text for how much you should pay/receive
  // here should add the input state of asshole frd 
  const calculatePayValue = useMemo(() => {
   if (moneyShould === 0 || isNaN(moneyShould)) {
-    return <>You don't have to pay</>;
-  } else if (moneyShould > 0) {
-    return <div className='total-you-should-recieve-text-color'>{state.name} should receive ${moneyShould.toFixed(4)}</div>;
-  } else {
-    return <div className='total-you-should-pay-text-color'>{state.name} should pay ${Math.abs(moneyShould.toFixed(4))}</div>;
+    return <>{language === 'english' ? <>You don't have to pay</> : <>你唔洗俾</>}</>;
+  } 
+  else if (moneyShould > 0) {
+    return <div className='total-you-should-recieve-text-color'>{state.name} {language === 'english' ? 
+                          <>should receive</>:<>要攞返</>} ${moneyShould.toFixed(4)}</div>;
+  } 
+  else {
+    return <div className='total-you-should-pay-text-color'>{state.name} {language === 'english' ? 
+                     <>should pay a total of </> : <>總共要俾</>} ${Math.abs(moneyShould.toFixed(4))}</div>;
   }
-}, [moneyShould, state.name]);
+}, [moneyShould, state.name,language]);
 
 
  useEffect(() => {
@@ -133,7 +140,7 @@ const moneyShould = useMemo(() => {
     dispatch({type:'IS_SAME_NUMBER_PEOPLE',value:totalPerson})
    }
     onUpdateShowMoney(frameId, moneyShould, state.name);
-  }, [moneyShould, onUpdateShowMoney, frameId, state.name, state.isSameNumberPeople, totalPerson]);
+  }, [moneyShould, onUpdateShowMoney, frameId, state.name, state.isSameNumberPeople, totalPerson,state.noNeedPay]);
 
   //start calculating
   const positivePayments = showOwnMoney.filter((person) => person.moneyShould > 0);
@@ -147,10 +154,10 @@ const moneyShould = useMemo(() => {
       if(moneyShould < 0){
         return (
           <div className='result-container'>
-            <h2 className='result-title'>Who you should pay to?</h2>
+            <h2 className='result-title'>{language === 'english' ? 'Who you should pay to?':'你要俾返邊條友?'}</h2>
             {positivePayments.map((person, index) => (
               <div key={index} className='should-pay-to-text-style'>
-                {`You owe ${person.name}: $${(
+                {`${language === 'english' ? 'You owe' : '你爭'} ${person.name}: $${(
                     ((person.moneyShould / sumOfPositivePayments) * Math.abs(moneyShould)).toFixed(4))}`}
                 <br />
               </div>
@@ -159,7 +166,7 @@ const moneyShould = useMemo(() => {
           </div>
         );
       }
-  }, [moneyShould, positivePayments, sumOfPositivePayments]);
+  }, [moneyShould, positivePayments, sumOfPositivePayments,language]);
   
   return (
     <div className="frame-wrapper">
@@ -172,41 +179,46 @@ const moneyShould = useMemo(() => {
                  className="input-field" 
                  value={state.name} 
                  onChange={nameFrame} 
-                 placeholder="Name" />
+                 placeholder={language === 'english' ? "Name" : "咩名"}
+                />
 
           <div className="messy-mode-share-food">
-               Share Food
+          {language === 'english' ? 'Shared Food':'大家有份食嘅餸'}
           </div>
           <input type="text" 
                  className="input-field" 
                  onChange={shareFoodInputChange} 
                  value={state.shareFoodInput}
-                 placeholder="Enter your payment" />
+                 placeholder={language === 'english' ? "Enter your payment":"輸入你俾咗D咩"} />
 
-          <div className="messy-mode-share-food">Not share Food</div>
+          <div className="messy-mode-share-food">{language === 'english' ? 'Not Shared Food' :'有人冇食唔想俾既餸'}</div>
           
           <AssholeFrdInfo
             totalPerson={totalPerson}
             handleUpdateNotShare={handleUpdateNotShare}
             toggled={toggled}
             notShareFoodSum={notShareFoodSum}
+            language={language}
           />
 
          <div className='final-total-container'>
          <div className="final-total">
-            You total have paid: ${totalPaid} 
+           {language === 'english' ? 'You total have paid' : '你總共俾咗'}: ${totalPaid} 
           </div>
         </div>
        
 
-          <div className="not-need-to-pay-title ">Any thing you don't have to pay?</div>
+          <div className="not-need-to-pay-title ">{language === 'english' ? "Anything you don't need to pay?" : "有冇D咩你唔洗俾？"}</div>
+          
            <NotNeedToPay 
            totalPerson={totalPerson}
            noNeedToPay={noNeedToPay}
+           language={language}
            />
-       
+           
           <div className='total-you-should-pay'> {calculatePayValue}</div>
             <div className='result-wrapper'>{calculateFinalResult}</div>
+        
         </div>
       </div>
     </div>

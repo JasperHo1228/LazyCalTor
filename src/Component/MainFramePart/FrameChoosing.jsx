@@ -3,10 +3,10 @@ import EachFrame from "../PaidByOnePeople/EachFrame/EachFrameInfo";
 import EachMessyFrame from '../PaidByMultiplePeople/EachMessyFrame';
 import SumUpEach_Input from '../PaidByOnePeople/SumUpEach_Input';
 import ConfirmBill from './components/ConfirmBill'
-import  { getTotalAmount }  from './components/GetTotalAmount'
+import  { getTotalAmount_DineOutMode, getTotalAmount_PartyMode }  from './components/GetTotalAmount'
 import NotShareFoodAndServiceCharge from '../PaidByOnePeople/NotShareFood_ServiceCharge'
 
-const FrameChoosing = ({framesArray,toggled})=>{
+const FrameChoosing = ({framesArray,toggled,language})=>{
     //combine two mode status setting
     const initialState = {
       shareFood: 0,
@@ -136,21 +136,32 @@ const FrameChoosing = ({framesArray,toggled})=>{
         }, [framesArray,toggled,state.frameTotals.length]);
        
       //check the bill -- one person mode
-      //check the share food amount -- party mode
-      const totalAmount = getTotalAmount(state);
+      const totalAmount_DineOutMode = getTotalAmount_DineOutMode(state);
 
+      //check the share food amount -- party mode
+      const totalAmount_PartyMode = getTotalAmount_PartyMode(state);
+      
       return(
         <>
           <div className='notice-wrapper'>
           <div className='flexColCenter notice-container'>
               <div className='notice-text'>
-                <h2>Notice!!</h2>
-                Please use space bar or ,(comma) to split up each number<br/>
-                請用空白鍵/逗號隔開價錢
+                <h2>{language === 'english' ? 'Notice!!' : "注意!!!"}</h2>
+              {
+              toggled ? 
+               <>{language === 'english' ? <>Please use space bar or ,(comma) to split up each number in<br/><span className='keyWord-bold-color'>Shared Food</span> <br/> and <br/> 
+                                             <span className='keyWord-bold-color'>What you've eaten input field</span><br/><br/>
+                                                   Example: 20,30.5,13</> : 
+                                           <> 請係<span className='keyWord-bold-color'>大家Share餸</span><br/>同<br/><span className='keyWord-bold-color'>你食咗咩嘅欄位</span><br/>用空白鍵/逗號隔開價錢 <br/> <br/>例子: 20,30.5,13</>}</>
+                 :
+               <>{ language === 'english' ? <>Please use space bar or ,(comma) to split up each number <br/> in <span className='keyWord-bold-color'> Share Food input field</span><br/><br/>
+               Example: 20,30.5,13</> : <>請係<span className='keyWord-bold-color'>大家有份食嘅餸嘅欄位</span><br/>用空白鍵/逗號隔開價錢<br/><br/>例子: 20,30.5,13</> }
+</>
+               }  
+               <br/>
               </div>
             </div>
             </div>
-            <h1>Enter the price separately for what you've{toggled ? " eaten":" paid"} !!!</h1> 
           <div className="frame-group">
             {
             framesArray.map((frame) => (
@@ -165,19 +176,21 @@ const FrameChoosing = ({framesArray,toggled})=>{
                             frameId={frame.id}
                             arrayLength={framesArray.length}
                             onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
+                            language={language}
                             /> 
                     :
                   <EachMessyFrame shareFood={state.shareFood} 
                                   servicePercent={state.servicePercent} 
                                   frameId={frame.id}
                                   totalPerson = {framesArray.length}
-                                  shareFoodTotalAmount = {totalAmount}
+                                  shareFoodTotalAmount = {totalAmount_PartyMode}
                                   noShareFoodTotalAmount = {state.frameNotShare}
                                   onUpdateShowMoney={handleUpdateShowMoney}
                                   onUpdateArrayData={handleUpdateArrayData}
                                   onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
                                   showOwnMoney = {showOwnMoney}
                                   toggled={toggled}
+                                  language={language}
                                   />
                 }
                 </div>
@@ -187,7 +200,9 @@ const FrameChoosing = ({framesArray,toggled})=>{
        
           </div>  
               {/* extra Information to check do the user input the value correctly */}
-              <ConfirmBill totalAmount={totalAmount} toggled={toggled} />
+              <ConfirmBill totalAmount_DineOutMode={isNaN(totalAmount_DineOutMode) ? 0 : totalAmount_DineOutMode} 
+                           totalAmount_PartyMode = {isNaN(totalAmount_PartyMode) ? 0 : totalAmount_PartyMode}
+                           toggled={toggled}  language={language}/>
               
               {/* display service charge and not share food dine out mode? */}
                { 
@@ -201,6 +216,7 @@ const FrameChoosing = ({framesArray,toggled})=>{
                   percentage_service = {percentage_service}
                   serviceChargeInput = {state.serviceChargeInput}
                   noShareFoodTotalAmount = {state.frameNotShare}
+                  language={language}
                   />
                   : 
                   null

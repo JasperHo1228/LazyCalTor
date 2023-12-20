@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import '../../../style/EachFrame.css'
 import SumUpEach_Input from '../SumUpEach_Input';
-import Calculator from '../Calculator';
+import Calculator_DineOutMode  from '../Calculator_DineOutMode ';
 import { useEffect } from 'react';
 import NotNeedToPay from '../../PaidByMultiplePeople/ComponentMessyFrame/NotNeedToPay';
 function EachFrame({shareFood, 
@@ -11,6 +11,7 @@ function EachFrame({shareFood,
                     frameId,
                     arrayLength,
                     onUpdateArrayNoNeedPay,
+                    language
                 }) {
 
     const [totalAmount, setTotalAmount] = useState(0);
@@ -56,7 +57,7 @@ function EachFrame({shareFood,
     }
    
    const getTotalPrice3digits = ()=>{
-       const EachFrameTotal = Calculator({
+       const EachFrameTotal =Calculator_DineOutMode({
           totalAmount: totalAmount,
           shareFood:  shareFood,
           notAllShare: notAllShare,
@@ -71,17 +72,20 @@ function EachFrame({shareFood,
           <div className='flexColCenter frame-container one-person-verion'>
             <div className='frame-content'>
                 <div className='each-frame-title one-person-title-color'>{name}</div>
-                  <input type='text' onChange={frameName} placeholder="Name" className='input-field' name='name' autoComplete="off"/>
-                  <div className='noNeedtoPay-one-person-mode'>What you've eaten?</div>
-                  <input type='text' onChange={handleInputChange} value={inputValue} placeholder="Enter the price amount" className='input-field' name="price" autoComplete="off"/>
+                  <input type='text' onChange={frameName} placeholder={language === 'english' ? "Name" : "咩名"} className='input-field' name='name' autoComplete="off"/>
+                  <div className='noNeedtoPay-one-person-mode'>{language === 'english' ? "What you've eaten?" : "你食咗咩？"}</div>
+                  <input type='text' onChange={handleInputChange} value={inputValue} placeholder= {language === 'english' ? "Enter each food price amount" : "輸入野食價錢"} className='input-field' name="price" autoComplete="off"/>
                 
-                <div className='noNeedtoPay-one-person-mode'>Anything you don't need to pay?</div>
+                <div className='noNeedtoPay-one-person-mode'>{language === 'english' ? "Anything you don't need to pay?" : "有冇D咩你唔洗俾？"}</div>
+                
                 <NotNeedToPay totalPerson={arrayLength}
-                              noNeedToPay={noNeedToPay}/>
+                              noNeedToPay={noNeedToPay}
+                              language={language}/>
                 
                 <div className="total-amount-bg"> 
                 <div className='total-amount'>
-                    Total: ${getTotalPrice3digits()}
+                    {/* Maybe apply the name at the beginning? */}
+                    {name} {language === 'english' ? "should pay:" : "要俾"} ${isNaN(getTotalPrice3digits()) ? '0.000' : getTotalPrice3digits()}
                   </div>
                 </div>
           </div>

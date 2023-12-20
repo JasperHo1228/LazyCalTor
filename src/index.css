@@ -43,11 +43,19 @@ code {
   flex-wrap: wrap;
 }
 
+.font-weight-700{
+  font-weight: 700;
+}
+
 .padding-bottom{
   padding-bottom: 0.5rem;
 }
 .padding-top{
   padding-top:0.5rem;
+}
+
+.padding-top-btn{
+  padding-top: 1.5rem;
 }
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,

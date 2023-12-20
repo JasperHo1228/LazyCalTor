@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/LazyCalTor/static/css/main.faad83e1.css",
-    "main.js": "/LazyCalTor/static/js/main.f79faebd.js",
+    "main.css": "/LazyCalTor/static/css/main.93cd3bb7.css",
+    "main.js": "/LazyCalTor/static/js/main.b0049088.js",
     "static/js/787.b36e709f.chunk.js": "/LazyCalTor/static/js/787.b36e709f.chunk.js",
     "static/media/Aladdin.png": "/LazyCalTor/static/media/Aladdin.01daf34a72c065bdcb08.png",
     "static/media/Jasmine-Profile1.webp": "/LazyCalTor/static/media/Jasmine-Profile1.e0a5a33d11aa47588715.webp",
     "index.html": "/LazyCalTor/index.html",
-    "main.faad83e1.css.map": "/LazyCalTor/static/css/main.faad83e1.css.map",
-    "main.f79faebd.js.map": "/LazyCalTor/static/js/main.f79faebd.js.map",
+    "main.93cd3bb7.css.map": "/LazyCalTor/static/css/main.93cd3bb7.css.map",
+    "main.b0049088.js.map": "/LazyCalTor/static/js/main.b0049088.js.map",
     "787.b36e709f.chunk.js.map": "/LazyCalTor/static/js/787.b36e709f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.faad83e1.css",
-    "static/js/main.f79faebd.js"
+    "static/css/main.93cd3bb7.css",
+    "static/js/main.b0049088.js"
   ]
 }

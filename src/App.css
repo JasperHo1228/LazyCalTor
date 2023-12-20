@@ -4,22 +4,33 @@
     text-align: center;
     padding-top: 1.5rem;
 }
-.mode-wrapper{
-   padding-left: 6.5rem;
-   padding-right: 6.5rem;
-
+.app-container{
+  border-radius: 0.5rem;
+  transition: background-color ease-in 0.5s;
+  
+  padding: 1.8rem;
 }
 
-.mode-container{
-    background-color: #FEDD7A;
-    padding: 2.5rem;
-    border-radius: 0.5rem;
-    transition: background-color ease-in 0.5s;
+.topic-bg-color-yellow{
+  background-color: #FEDD7A;
+}
+.topic-bg-color-blue{
+  background-color: #65C5C8;
 }
 
-.mode-container.toggled{
-    background-color: #65C5C8;
+.justifySpaceBetween{
+  gap:1rem;
 }
+
+.languageBtn{
+  cursor: pointer;
+}
+
+.active{
+  color:#9614ba
+}
+
+
 
 .change-mode-button{
    --s: 30px; /* adjust this to control the size*/
@@ -49,9 +60,15 @@
     transform: rotate(0.1deg);
 }
 
+
 @media screen and (max-width:400px) {
     .mode-wrapper{
         padding-left: 1.5rem;
         padding-right: 1.5rem;
      }
+}
+
+.keyWord-bold-color{
+  font-weight: 750;
+  color:rgb(186, 60, 1);
 }

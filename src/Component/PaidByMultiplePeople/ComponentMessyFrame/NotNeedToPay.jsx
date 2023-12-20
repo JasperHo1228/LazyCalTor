@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-const NotNeedToPay = ({totalPerson,noNeedToPay}) => {
+const NotNeedToPay = ({totalPerson,noNeedToPay,language}) => {
     const [inputGroups, setInputGroups] = useState([
         {
           name: '',
@@ -104,7 +104,7 @@ const NotNeedToPay = ({totalPerson,noNeedToPay}) => {
               value={inputGroup.name}
               onChange={(event) => nameFrame(event, index)}
               className='input-field'
-              placeholder='Name of the Food'
+              placeholder={language === 'english' ? 'Name of the Food':'咩野食黎'}
             />
 
             <input
@@ -113,13 +113,15 @@ const NotNeedToPay = ({totalPerson,noNeedToPay}) => {
               className='input-field'
               value={inputGroup.payment}
               onChange={(event) => noNeedtoPayInputChange(event, index, 'payment')}
-              placeholder='Enter the price'
+              placeholder={language === 'english' ? 'Each should pay?':'每人俾幾多？'}
             />
-            <button className='asshole-frd-btn' onClick={() => deleteInputGroup(index)}>Delete</button>
+            <button className='asshole-frd-btn noNeedPaybtn-color' onClick={() => deleteInputGroup(index)}>{language === 'english' ? "Delete" : "Del咗佢"}</button>
             </div>
             </div>
         ))}
-            <button className='asshole-frd-btn' onClick={addInputGroup}>Add more row</button>
+          <div className='padding-top'>
+               <button className='asshole-frd-btn noNeedPaybtn-color' onClick={addInputGroup}>{language === 'english' ? "Add more row" : "加多行"}</button>
+          </div>
         </div>
       )
 

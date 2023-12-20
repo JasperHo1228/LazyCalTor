@@ -2,7 +2,7 @@ import React,{useState} from "react";
 import '../../style/NumberOfFrame.css'
 import FrameStructure from "../FrameStructure";
 
-function NumberOfFrame({toggled}) {
+function NumberOfFrame({toggled,language}) {
     const [frames,setNumberFrames] = useState([]);
     const [frameCount,setFrameCount] = useState("");
     const [warning,setWarning] = useState(null);
@@ -30,7 +30,7 @@ function NumberOfFrame({toggled}) {
     <div className="numberofFrameContainer">
       <div className="input-group">
       <input
-        placeholder="Enter number of people"
+        placeholder={language === 'english' ? "Enter number of people" : "輸入人數"}
         id="fname"
         className="input-field"
         value={inputValue}
@@ -38,12 +38,14 @@ function NumberOfFrame({toggled}) {
       />
       </div>
        <div className="btn-container">
-        <button className='tap-me' onClick = {()=> generateFrame(frameCount)}>Click Me</button>
+        <button className='tap-me' onClick = {()=> generateFrame(frameCount)}>{language === 'english' ? 'Click Me' : '撳掣'}</button>
        </div>
        <FrameStructure framesArray = {frames}  
                        warningTextStatus={warning} 
                        toggled={toggled}
-                       className="output-frame-container"/>
+                       language={language}
+                       className="output-frame-container"
+                       />
        </div>
   )
 }

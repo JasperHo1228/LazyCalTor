@@ -8,7 +8,8 @@ const NotShareFood_ServiceCharge = ({ShareFoodCalculate,
                                      NotAllShareFoodOnePerson,
                                      percentage_service,
                                      getNotShareAmount,
-                                     serviceChargeInput}) => {
+                                     serviceChargeInput,
+                                     language}) => {
     
     const initialState ={                               
           totalNotSharePayment:0,
@@ -39,27 +40,28 @@ const NotShareFood_ServiceCharge = ({ShareFoodCalculate,
     return(
         <div className="share-frame-wrapper">
         <div className="share-frame-container">
-        <h1>Any Shared Food?</h1>
+        <h1>{language === 'english' ? 'Any Shared Food?':'大家Share餸'}</h1>
             <div className="share-info">
             <input onChange = {ShareFoodCalculate} 
                    value={shareFoodInputValue}
-                   placeholder="Enter the price" 
+                   placeholder={language === 'english' ? 'Enter the food price' : '輸入野食價錢'}
                    className='input-field-share'  
                    name="shareFood" 
                    type='text'
                    autoComplete="off"/>
-            <div className='per-person'>Each Person: ${shareFood}</div>
+            <div className='per-person'>{language === 'english' ? 'Each Person':'每人要俾'}: ${shareFood}</div>
         </div>
 
         {/* for some people who didn't eat the food  */}
         <div className="share-info">
           {/* show the example how to use it */}
           <h1 className="padding-bottom one-person-mode-not-share-food-text">
-               Any Food Not Shared among All?
+               {language === 'english' ? 'Any food not shared among all?' : '邊個仆街冇食到唔想俾?'}
           </h1>
 
           <AssholeFrdInfo
             totalPerson={totalPerson}
+            language={language}
             toggled={toggled}
             notShareFoodSum={notShareFoodSum}
           />
@@ -67,12 +69,12 @@ const NotShareFood_ServiceCharge = ({ShareFoodCalculate,
 
         {/* service charge */}
         <div className="share-info">
-          <h1>Enter Service Charge here below!!</h1>
+          <h1>{language === 'english' ? 'Enter Service Charge here below!!':'輸入服務費'}</h1>
             <input onChange = {percentage_service} 
                     name="serviceCharge"
                     type='text'
                     value = {serviceChargeInput} 
-                    placeholder="Service Charge %" 
+                    placeholder= {language === 'english' ? "Service Charge %" : "服務費%"}
                     className='input-field-share' 
                     autoComplete="off"/>
         </div>

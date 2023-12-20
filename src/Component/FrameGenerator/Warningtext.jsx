@@ -4,12 +4,12 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import Aladdin from "../../Image/Aladdin.png"
 import Jasmine from "../../Image/Jasmine-Profile1.webp"
 
-const Warningtext = ({ number,toggled }) => {
+const Warningtext = ({ number, language}) => {
     if (number < 0 || number === 0) {
         return (
           <div className="warning-text">
             <br/>
-            Are you joking? Don't mess with me!
+            {language === 'english' ? <>Are you joking? Don't mess with me!</> : <>你真心有撚病喎Ching</> }
             <br />
             <LazyLoadImage src={Aladdin} className="aladdin"/>
           </div>
@@ -19,7 +19,7 @@ const Warningtext = ({ number,toggled }) => {
         return (
           <div  className="warning-text">
             <br />
-              Use your calculator!
+              {language === 'english' ? <>Use your calculator!</> : <>你一個人就咪用我啦！</>}
             <br />
             <LazyLoadImage src={Aladdin} className="aladdin"/>
           </div>
@@ -29,9 +29,9 @@ const Warningtext = ({ number,toggled }) => {
         return (
           <div className="warning-text">
             <br />
-            How is it that so many people are having dinner together?
+          { language === 'english' ? <>How is it that so many people are having dinner together?
             <br />
-             No more than 200 please!
+             No more than 200 please!</> : <>200幾個人你傻咗啊？ 最多200個人呀</>}
             <br/>
             <LazyLoadImage src={Aladdin} className="aladdin" alt="Aladdin" />
           </div>
@@ -40,10 +40,7 @@ const Warningtext = ({ number,toggled }) => {
       else {
         return (
           <div  className="warning-text">
-            {toggled ? <h3 className="warning-title-1">Paid By One Person Mode</h3>
-            :<h3 className="warning-title-2">Paid By Multiple Person Mode</h3>}
-            <br />
-            Please enter a reasonable number
+            {language === 'english' ? <>Please enter a reasonable number</> : <>請輸入一個合理數字</>}
             <br />
             <LazyLoadImage src={Jasmine} className="aladdin-jasmine"/>
           </div>
