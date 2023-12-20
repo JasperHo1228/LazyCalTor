@@ -162,7 +162,6 @@ const moneyShould = useMemo(() => {
                 <br />
               </div>
             ))}
-            
           </div>
         );
       }

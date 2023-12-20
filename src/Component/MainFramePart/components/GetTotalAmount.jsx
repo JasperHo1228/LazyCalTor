@@ -1,5 +1,5 @@
 import Calculator_DineOutMode  from '../../PaidByOnePeople/Calculator_DineOutMode ';
-import CalculatorMessyMode from '../../PaidByMultiplePeople/ComponentMessyFrame/CalculatorMessyMode';
+import CalculatorPartyMode from '../../PaidByMultiplePeople/ComponentMessyFrame/CalculatorPartyMode';
 export function getTotalAmount_DineOutMode(state) {
   return state.frameTotals.reduce((total, frameTotal, index) => {
     const currentTotal = Calculator_DineOutMode ({
@@ -15,7 +15,7 @@ export function getTotalAmount_DineOutMode(state) {
 
 export function getTotalAmount_PartyMode(state){
   return state.frameTotals.reduce((total, frameTotal) => {
-    const currentTotal = CalculatorMessyMode({
+    const currentTotal = CalculatorPartyMode({
       totalAmount: frameTotal,
       shareFood: state.shareFood,
       notAllShare: state.notAllShare,

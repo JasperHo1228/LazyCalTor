@@ -1,7 +1,7 @@
-const CalculatorMessyMode = ({totalAmount,shareFood,notAllShare, servicePercent}) => {
+const CalculatorPartyMode = ({totalAmount,shareFood,notAllShare, servicePercent}) => {
        const result = (parseFloat(totalAmount) + parseFloat(shareFood) + parseFloat(notAllShare)) *
        (1 + parseFloat(servicePercent));
        return result 
        
     }
-    export default CalculatorMessyMode
+    export default CalculatorPartyMode
