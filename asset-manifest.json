@@ -1,17 +1,17 @@
 {
   "files": {
     "main.css": "/LazyCalTor/static/css/main.fe2ef2a2.css",
-    "main.js": "/LazyCalTor/static/js/main.2905c472.js",
+    "main.js": "/LazyCalTor/static/js/main.87ab8733.js",
     "static/js/787.b36e709f.chunk.js": "/LazyCalTor/static/js/787.b36e709f.chunk.js",
     "static/media/Aladdin.png": "/LazyCalTor/static/media/Aladdin.01daf34a72c065bdcb08.png",
     "static/media/Jasmine-Profile1.webp": "/LazyCalTor/static/media/Jasmine-Profile1.e0a5a33d11aa47588715.webp",
     "index.html": "/LazyCalTor/index.html",
     "main.fe2ef2a2.css.map": "/LazyCalTor/static/css/main.fe2ef2a2.css.map",
-    "main.2905c472.js.map": "/LazyCalTor/static/js/main.2905c472.js.map",
+    "main.87ab8733.js.map": "/LazyCalTor/static/js/main.87ab8733.js.map",
     "787.b36e709f.chunk.js.map": "/LazyCalTor/static/js/787.b36e709f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.fe2ef2a2.css",
-    "static/js/main.2905c472.js"
+    "static/js/main.87ab8733.js"
   ]
 }
