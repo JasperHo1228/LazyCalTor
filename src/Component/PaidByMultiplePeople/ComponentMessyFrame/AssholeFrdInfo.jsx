@@ -94,7 +94,15 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum, to
             </div>;
     }
     else {
-      return `${language === 'english' ?  'Each should pay: ' : '每人要俾: ' }$${total} `;
+      return (
+        <>
+          {total !== 0 && (
+            <>
+              {language === 'english' ? "Someone doesn't need to pay $" : '有人唔洗俾 $'}{total}
+            </>
+          )}
+        </>
+      );
     }
   };
   

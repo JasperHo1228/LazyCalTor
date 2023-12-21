@@ -40,7 +40,7 @@ const NotShareFood_ServiceCharge = ({ShareFoodCalculate,
     return(
         <div className="share-frame-wrapper">
         <div className="share-frame-container">
-        <h1>{language === 'english' ? 'Any Shared Food?':'大家Share餸'}</h1>
+        <h1>{language === 'english' ? 'Any Shared Food?':'有冇開心Share餸呢'}</h1>
             <div className="share-info">
             <input onChange = {ShareFoodCalculate} 
                    value={shareFoodInputValue}
@@ -49,7 +49,7 @@ const NotShareFood_ServiceCharge = ({ShareFoodCalculate,
                    name="shareFood" 
                    type='text'
                    autoComplete="off"/>
-            <div className='per-person'>{language === 'english' ? 'Each Person':'每人要俾'}: ${shareFood}</div>
+            <div className='per-person'>{language === 'english' ? 'Each Person should pay':'每人要俾'}: ${shareFood}</div>
         </div>
 
         {/* for some people who didn't eat the food  */}
