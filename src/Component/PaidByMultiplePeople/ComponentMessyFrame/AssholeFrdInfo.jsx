@@ -84,10 +84,14 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum, to
     const totalAssholeFrd = totalPerson - numberOfFriends;
     //isFinite(Infinity)should return false because Infinity is not finite.
     if (totalAssholeFrd === 0) {
-      return <>Are you sure everyone, including yourself, is an Asshole?</>;
+      return <div className='text-center'>
+               {language === 'english' ? <>Is this a shared food?</> : <>呢個係咪些牙野食黎？</>}
+             </div>;
     } 
     else if(totalAssholeFrd <= 0){
-      return <>You are an Asshole! How many frd you've got?</>;
+      return <div className='text-center'>
+              {language === 'english' ? <>You are an Asshole! <br/>How many frds you've got?</> : <>撞鬼你呀!<br/>你夠竟有幾多條友？</>}
+            </div>;
     }
     else {
       return `${language === 'english' ?  'Each should pay: ' : '每人要俾: ' }$${total} `;
@@ -152,7 +156,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum, to
               value={inputGroup.name}
               onChange={(event) => nameFrame(event, index)}
               className='input-field'
-              placeholder={language === 'english' ? 'Food Name':'咩野食野'}
+              placeholder={language === 'english' ? 'Food Name':'咩野食黎'}
             />
             <input
               type='text'
@@ -161,7 +165,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum, to
               value={inputGroup.payment}
               onChange={(event) => notShareFoodInputChange(event, index, 'payment')}
               placeholder={toggled ? (language === 'english' ? 'Enter the food price' : '輸入野食價錢') : 
-                                      (language === 'english' ? 'Enter your payment':'輸入你俾咗D咩')}
+                                      (language === 'english' ? 'Enter your payment':'輸入你俾咗幾錢')}
             />
             <input
               type='text'
@@ -169,7 +173,7 @@ function AssholeFrdInfo( {totalPerson, handleUpdateNotShare, notShareFoodSum, to
               className='input-field'
               value={inputGroup.numberOfFriends}
               onChange={(event) => notShareFoodInputChange(event, index, 'numberOfFriends')}
-              placeholder={language === 'english' ? 'Number of exempt frd' : '幾多個唔洗俾'}
+              placeholder={language === 'english' ? 'Number of exempt frd' : '輸入幾多個唔洗俾'}
             />
             <button className={toggled? 'asshole-frd-btn dine-out-mode-asshole-frd-color-btn'
                                           :'asshole-frd-btn party-mode-asshole-frd-color-btn'} onClick={() => deleteInputGroup(index,toggled)}>

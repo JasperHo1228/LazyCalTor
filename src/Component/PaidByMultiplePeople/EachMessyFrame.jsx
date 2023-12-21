@@ -121,7 +121,7 @@ const moneyShould = useMemo(() => {
   } 
   else if (moneyShould > 0) {
     return <div className='total-you-should-recieve-text-color'>{state.name} {language === 'english' ? 
-                          <>should receive</>:<>要攞返</>} ${moneyShould.toFixed(4)}</div>;
+                          <>should receive</>:<>要收返</>} ${moneyShould.toFixed(4)}</div>;
   } 
   else {
     return <div className='total-you-should-pay-text-color'>{state.name} {language === 'english' ? 
@@ -188,9 +188,9 @@ const moneyShould = useMemo(() => {
                  className="input-field" 
                  onChange={shareFoodInputChange} 
                  value={state.shareFoodInput}
-                 placeholder={language === 'english' ? "Enter your payment":"輸入你俾咗D咩"} />
+                 placeholder={language === 'english' ? "Enter your payment":"輸入你俾咗幾銀"} />
 
-          <div className="messy-mode-share-food">{language === 'english' ? 'Not Shared Food' :'有人冇食唔想俾既餸'}</div>
+          <div className="messy-mode-share-food">{language === 'english' ? 'Food NOT shared by all' :'有人冇食唔想俾既餸'}</div>
           
           <AssholeFrdInfo
             totalPerson={totalPerson}

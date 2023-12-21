@@ -42,7 +42,7 @@ function App() {
   const ChineseButton = () => {
     return(
       <div className={`languageBtn ${isChineseBtnClicked ? 'active' : ''}`} onClick={handleChineseBtn}>
-      <h5>中文</h5>
+      <h5>廣東話</h5>
     </div>
     )
   }
