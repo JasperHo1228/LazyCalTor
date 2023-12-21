@@ -149,56 +149,88 @@ const FrameChoosing = ({framesArray,toggled,language})=>{
                 <h2>{language === 'english' ? 'Notice!!' : "注意!!!"}</h2>
               {
               toggled ? 
-               <>{language === 'english' ? <>Please use space bar or ,(comma) to split up each number in<br/><span className='keyWord-bold-color'>Shared Food</span> <br/> and <br/> 
-                                             <span className='keyWord-bold-color'>What you've eaten input field</span><br/><br/>
-                                                   Example: 20,30.5,13</> : 
-                                           <> 請係<span className='keyWord-bold-color'>大家Share餸</span><br/>同<br/><span className='keyWord-bold-color'>你食咗咩嘅欄位</span><br/>用空白鍵/逗號隔開價錢 <br/> <br/>例子: 20,30.5,13</>}</>
+               <>{
+                 language === 'english' ? 
+                  <>
+                    Please use space bar or ,(comma) to split up each number in<br/>
+                      <span className='keyWord-bold-color'>Shared Food</span> 
+                      <br/> 
+                      and 
+                      <br/> 
+                      <span className='keyWord-bold-color'> What you've eaten </span>
+                      input field<br/><br/>
+                      Example: 20,30.5,13
+                   </> 
+                    : 
+                  <>
+                    請係
+                    <span className='keyWord-bold-color'>有冇開心Share餸?</span><br/>
+                    同<br/>
+                    <span className='keyWord-bold-color'>你食咗咩嘅</span>
+                      欄位<br/>
+                      用空白鍵/逗號隔開價錢<br/><br/>
+                      例子: 20,30.5,13</>}
+                  </>
                  :
-               <>{ language === 'english' ? <>Please use space bar or ,(comma) to split up each number <br/> in <span className='keyWord-bold-color'> Share Food input field</span><br/><br/>
-               Example: 20,30.5,13</> : <>請係<span className='keyWord-bold-color'>大家有份食嘅餸嘅欄位</span><br/>用空白鍵/逗號隔開價錢<br/><br/>例子: 20,30.5,13</> }
-</>
+                  <>
+                  {
+                      language === 'english' ? 
+                      <>Please use space bar or ,(comma) to split up each number <br/> 
+                      in 
+                      <span className='keyWord-bold-color'> Share Food </span>
+                      input field<br/><br/>
+                      Example: 20,30.5,13</> 
+                      : 
+                      <>請係
+                      <span className='keyWord-bold-color'>
+                        大家有份食嘅餸
+                      </span>
+                        欄位<br/>
+                        用空白鍵/逗號隔開價錢<br/><br/>
+                        例子: 20,30.5,13</>
+                    }
+                  </>
                }  
                <br/>
               </div>
             </div>
             </div>
-          <div className="frame-group">
-            {
-            framesArray.map((frame) => (
-              <div key={frame.id}>
-                  <div className="each-frame">
-                {
-                toggled?
-                  <EachFrame shareFood={state.shareFood} 
-                            servicePercent={state.servicePercent} 
-                            notAllShare={state.notAllShare}
-                            onUpdateArrayData={handleUpdateArrayData}
-                            frameId={frame.id}
-                            arrayLength={framesArray.length}
-                            onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
-                            language={language}
-                            /> 
+            <div className="frame-group">
+              {
+              framesArray.map((frame) => (
+                <div key={frame.id}>
+                    <div className="each-frame">
+                  {
+                  toggled?
+                    <EachFrame shareFood={state.shareFood} 
+                              servicePercent={state.servicePercent} 
+                              notAllShare={state.notAllShare}
+                              onUpdateArrayData={handleUpdateArrayData}
+                              frameId={frame.id}
+                              arrayLength={framesArray.length}
+                              onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
+                              language={language}
+                              /> 
                     :
-                  <EachMessyFrame shareFood={state.shareFood} 
-                                  servicePercent={state.servicePercent} 
-                                  frameId={frame.id}
-                                  totalPerson = {framesArray.length}
-                                  shareFoodTotalAmount = {totalAmount_PartyMode}
-                                  noShareFoodTotalAmount = {state.frameNotShare}
-                                  onUpdateShowMoney={handleUpdateShowMoney}
-                                  onUpdateArrayData={handleUpdateArrayData}
-                                  onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
-                                  showOwnMoney = {showOwnMoney}
-                                  toggled={toggled}
-                                  language={language}
-                                  />
-                }
+                    <EachMessyFrame shareFood={state.shareFood} 
+                                    servicePercent={state.servicePercent} 
+                                    frameId={frame.id}
+                                    totalPerson = {framesArray.length}
+                                    shareFoodTotalAmount = {totalAmount_PartyMode}
+                                    noShareFoodTotalAmount = {state.frameNotShare}
+                                    onUpdateShowMoney={handleUpdateShowMoney}
+                                    onUpdateArrayData={handleUpdateArrayData}
+                                    onUpdateArrayNoNeedPay = {handleUpdateArrayNoNeedPay}
+                                    showOwnMoney = {showOwnMoney}
+                                    toggled={toggled}
+                                    language={language}
+                                    />
+                  }
+                  </div>
                 </div>
-              </div>
-            ))
-            }
-       
-          </div>  
+              ))
+              }
+            </div>  
               
               {/* display service charge and not share food dine out mode? */}
                { 
@@ -216,12 +248,12 @@ const FrameChoosing = ({framesArray,toggled,language})=>{
                   />
                   : 
                   null
-                  }
-                   {/* extra Information to check do the user input the value correctly */}
+                }
+
+              {/* extra Information to check do the user input the value correctly */}
               <ConfirmBill totalAmount_DineOutMode={isNaN(totalAmount_DineOutMode) ? 0 : totalAmount_DineOutMode} 
                            totalAmount_PartyMode = {isNaN(totalAmount_PartyMode) ? 0 : totalAmount_PartyMode}
-                           toggled={toggled}  language={language}/>
-              
+                           toggled={toggled}  language={language}/> 
             </>
           )
   }

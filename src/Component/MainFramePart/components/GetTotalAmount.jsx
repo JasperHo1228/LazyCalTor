@@ -1,5 +1,6 @@
 import Calculator_DineOutMode  from '../../PaidByOnePeople/Calculator_DineOutMode ';
 import CalculatorPartyMode from '../../PaidByMultiplePeople/ComponentMessyFrame/CalculatorPartyMode';
+
 export function getTotalAmount_DineOutMode(state) {
   return state.frameTotals.reduce((total, frameTotal, index) => {
     const currentTotal = Calculator_DineOutMode ({

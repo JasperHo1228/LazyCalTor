@@ -40,7 +40,7 @@ const NotShareFood_ServiceCharge = ({ShareFoodCalculate,
     return(
         <div className="share-frame-wrapper">
         <div className="share-frame-container">
-        <h1>{language === 'english' ? 'Any Shared Food?':'有冇開心Share餸呢'}</h1>
+        <h1>{language === 'english' ? 'Any Shared Food?':'有冇開心Share餸?'}</h1>
             <div className="share-info">
             <input onChange = {ShareFoodCalculate} 
                    value={shareFoodInputValue}

@@ -3,7 +3,6 @@ import Warningtext from "./FrameGenerator/Warningtext";
 import FrameChoosing from './MainFramePart/FrameChoosing'
 import '../style/FrameStructure.css'
 
-
 const FrameStructure = ({ framesArray, warningTextStatus,toggled,language}) => {
   
   return(

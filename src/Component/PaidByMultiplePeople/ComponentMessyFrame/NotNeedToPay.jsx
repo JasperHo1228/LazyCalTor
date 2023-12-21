@@ -113,7 +113,7 @@ const NotNeedToPay = ({totalPerson,noNeedToPay,language}) => {
               className='input-field'
               value={inputGroup.payment}
               onChange={(event) => noNeedtoPayInputChange(event, index, 'payment')}
-              placeholder={language === 'english' ? 'Enter non-payable amount':'輸入唔洗俾幾多'}
+              placeholder={language === 'english' ? 'Non-payable amount':'輸入唔洗俾幾多'}
             />
             <button className='asshole-frd-btn noNeedPaybtn-color' onClick={() => deleteInputGroup(index)}>{language === 'english' ? "Delete" : "Del咗佢"}</button>
             </div>

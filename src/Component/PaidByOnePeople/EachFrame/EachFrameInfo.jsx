@@ -71,11 +71,13 @@ function EachFrame({shareFood,
       <div className='frame-wrapper'>
           <div className='flexColCenter frame-container one-person-verion'>
             <div className='frame-content'>
-                <div className='each-frame-title one-person-title-color'>{name}</div>
-                  <input type='text' onChange={frameName} placeholder={language === 'english' ? "Name" : "咩名"} className='input-field' name='name' autoComplete="off"/>
-                  <div className='noNeedtoPay-one-person-mode'>{language === 'english' ? "What you've eaten?" : "你食咗咩？"}</div>
-                  <input type='text' onChange={handleInputChange} value={inputValue} placeholder= {language === 'english' ? "Enter each food price amount" : "輸入野食價錢"} className='input-field' name="price" autoComplete="off"/>
-                
+                <div className='each-frame-title one-person-title-color'>{name === '' ? 
+                  <>{language === 'english' ? "Who pay for it?" : "邊條友俾？"}</> : <>{name}</>}
+                </div>
+                <input type='text' onChange={frameName} placeholder={language === 'english' ? "Name" : "咩名"} className='input-field' name='name' autoComplete="off"/>
+                <div className='noNeedtoPay-one-person-mode'>{language === 'english' ? "What you've eaten?" : "你食咗咩？"}</div>
+                <input type='text' onChange={handleInputChange} value={inputValue} placeholder= {language === 'english' ? "Enter each food price amount" : "輸入野食價錢"} className='input-field' name="price" autoComplete="off"/>
+                  
                 <div className='noNeedtoPay-one-person-mode'>{language === 'english' ? "Anything you don't need to pay?" : "有冇D咩你唔洗俾？"}</div>
                 
                 <NotNeedToPay totalPerson={arrayLength}
@@ -83,12 +85,14 @@ function EachFrame({shareFood,
                               language={language}/>
                 
                 <div className="total-amount-bg"> 
-                <div className='total-amount'>
-                    {/* Maybe apply the name at the beginning? */}
-                    {name} {language === 'english' ? "should pay:" : "要俾"} ${isNaN(getTotalPrice3digits()) ? '0.000' : getTotalPrice3digits()}
-                  </div>
+                    <div className='total-amount'>
+                      {/* Maybe apply the name at the beginning? */}
+                      {name === '' ? <>{language === 'english' ? 'You ':'你'}</>:<>{name} </>}  
+                      {language === 'english' ? "should pay:" : "要俾"} ${isNaN(getTotalPrice3digits()) ? '0.000' : getTotalPrice3digits()}
+                    </div>
                 </div>
-          </div>
+
+            </div>
           </div>
       </div>
     )
