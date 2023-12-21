@@ -199,10 +199,6 @@ const FrameChoosing = ({framesArray,toggled,language})=>{
             }
        
           </div>  
-              {/* extra Information to check do the user input the value correctly */}
-              <ConfirmBill totalAmount_DineOutMode={isNaN(totalAmount_DineOutMode) ? 0 : totalAmount_DineOutMode} 
-                           totalAmount_PartyMode = {isNaN(totalAmount_PartyMode) ? 0 : totalAmount_PartyMode}
-                           toggled={toggled}  language={language}/>
               
               {/* display service charge and not share food dine out mode? */}
                { 
@@ -221,6 +217,11 @@ const FrameChoosing = ({framesArray,toggled,language})=>{
                   : 
                   null
                   }
+                   {/* extra Information to check do the user input the value correctly */}
+              <ConfirmBill totalAmount_DineOutMode={isNaN(totalAmount_DineOutMode) ? 0 : totalAmount_DineOutMode} 
+                           totalAmount_PartyMode = {isNaN(totalAmount_PartyMode) ? 0 : totalAmount_PartyMode}
+                           toggled={toggled}  language={language}/>
+              
             </>
           )
   }
